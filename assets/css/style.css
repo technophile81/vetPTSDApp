@@ -82,6 +82,7 @@ header a:hover {
 
 input[type=text]{
     width: 95%;
+    border: 1px solid black;
 }
 
 /* index.html styles  */
