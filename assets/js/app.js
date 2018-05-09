@@ -1,5 +1,5 @@
 
-<<<<<<< HEAD
+//Assessment set up
 
 $(document).ready(function () {
 
@@ -175,7 +175,7 @@ $(document).ready(function () {
     };
 
 })
-=======
+
 // Below is the code to use with the graphs. Each graph already has an id on the index.html page, included in the "canvas" tag
 
 // var ctxD = document.getElementById("doughnutChart").getContext('2d');
@@ -196,4 +196,4 @@ $(document).ready(function () {
 //     }    
 // });
             
->>>>>>> b9d1270dbea3f984009db82f059ffa70cb5d310e
+
