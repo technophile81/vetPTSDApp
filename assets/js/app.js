@@ -156,12 +156,17 @@ $(document).ready(function () {
             $("#assessmentsq").html("Let's begin behavior analysis");
             $("#yes").hide();
             $("#no").hide();
+            console.log(yes/countAssessment);
+            console.log(no/countAssessment);
 
 
         } else {
             callAssessments();
         }
     };
+
+    // Calculate average
+
 
     // Reset function(if needed)
     function reset() {
