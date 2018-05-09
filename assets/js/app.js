@@ -163,6 +163,7 @@ $(document).ready(function () {
         }
     };
 
+    // Reset function(if needed)
     function reset() {
         var countAssessment = 0;
         var yes = 0;
