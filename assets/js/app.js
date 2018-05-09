@@ -236,31 +236,6 @@ $(document).ready(function () {
     }
     
 
-    // function drawAssessmentGraph(assessmentResult, assessmentresultgraph , assessmentresultgraph) {
 
-    //     console.log("result graph working")
-    //     var remainder = 100 - assessmentResult;
-    
-    //     //pass the canvas id name down through arguments instead of using it here
-    //     $("#results-preview").attr("data-result-value", assessmentResult);
-    
-    //     var ctxD = document.getElementById(assessmentresultgraph).getContext('2d');
-    //     var myLineChart = new Chart(ctxD, {
-    //         type: 'doughnut',
-    //         data: {
-    //             labels: ["Concern", "Non-concern"],
-    //             datasets: [
-    //                 {
-    //                     data: [assessmentResult, remainder],
-    //                     backgroundColor: ["blue", "gray"],
-    //                     hoverBackgroundColor: ["#FF5A5E", "#5AD3D1"]
-    //                 }
-    //             ]
-    //         },
-    //         options: {
-    //             responsive: true
-    //         }
-    //     });
-    // };
 
 });
