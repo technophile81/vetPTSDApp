@@ -5,6 +5,7 @@ $(document).ready(function () {
 
     //set variable
     var countAssessment = 0;
+    var assessmentResult = 0;
     var yes = 0;
     var no = 0;
     var array = [];
@@ -156,18 +157,16 @@ $(document).ready(function () {
             $("#assessmentsq").html("Let's begin behavior analysis");
             $("#yes").hide();
             $("#no").hide();
-            console.log(yes/countAssessment);
-            console.log(no/countAssessment);
-
+            assessmentResult = (yes/countAssessment)*100;
+            console.log(assessmentResult);
+            drawResultGraph(assessmentResult, "#assessment-result-graph", "assessment-result-graph");
+            
 
         } else {
             callAssessments();
         }
     };
-
-    // Calculate average
-
-
+    
     // Reset function(if needed)
     function reset() {
         var countAssessment = 0;
@@ -180,7 +179,7 @@ $(document).ready(function () {
 
     };
 
-})
+   
 
 
 //You can use this function as a callback wherever you are calculating the results of your analysis to generate your graph
@@ -219,7 +218,7 @@ $(document).ready(function () {
     
     //push your final average from your section's analysis into this array
     var overallResultArray = [];
-    
+        
     function calculateRecommendationAverage(){
     
         for (var k = 0; k< overallResultArray.length; k++){
@@ -236,3 +235,32 @@ $(document).ready(function () {
     
     }
     
+
+    // function drawAssessmentGraph(assessmentResult, assessmentresultgraph , assessmentresultgraph) {
+
+    //     console.log("result graph working")
+    //     var remainder = 100 - assessmentResult;
+    
+    //     //pass the canvas id name down through arguments instead of using it here
+    //     $("#results-preview").attr("data-result-value", assessmentResult);
+    
+    //     var ctxD = document.getElementById(assessmentresultgraph).getContext('2d');
+    //     var myLineChart = new Chart(ctxD, {
+    //         type: 'doughnut',
+    //         data: {
+    //             labels: ["Concern", "Non-concern"],
+    //             datasets: [
+    //                 {
+    //                     data: [assessmentResult, remainder],
+    //                     backgroundColor: ["blue", "gray"],
+    //                     hoverBackgroundColor: ["#FF5A5E", "#5AD3D1"]
+    //                 }
+    //             ]
+    //         },
+    //         options: {
+    //             responsive: true
+    //         }
+    //     });
+    // };
+
+});

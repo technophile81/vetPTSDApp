@@ -84,16 +84,16 @@
                                 </h5>
                             </div>
 
+                            <!-- Assessment Section-->
+                            <div id="collapseOne" class="collapse show step-one" aria-labelledby="headingOne" data-parent="#accordion">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-sm-12" id="assessment-div">
+                                            <p id="assessmentsq">Assessment</p>
 
-                        <div id="collapseOne" class="collapse show step-one" aria-labelledby="headingOne" data-parent="#accordion">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-sm-12" id="assessment-div">
-                                        <p id="assessmentsq">Assessment</p>
-                                        
-                                        <button id="assessmentstart">Start</button>
-                                        <button id="yes">Yes</button>
-                                        <button id="no">No</button>
+                                            <button id="assessmentstart">Start</button>
+                                            <button id="yes">Yes</button>
+                                            <button id="no">No</button>
 
                                         </div>
 
@@ -115,7 +115,8 @@
                                     <div class="row">
                                         <div class="col-sm-12" id="description-input-div">
                                             <form>
-                                                <label>In your own words, describe the behaviors or situations that have been concerning since the trauma occurred.</label>
+                                                <label>In your own words, describe the behaviors or situations that have been concerning
+                                                    since the trauma occurred.</label>
                                                 <input type="text" id="behavior-description" required>
                                                 <input type="submit" name="submittext" id="submit-text">
                                             </form>
@@ -142,9 +143,9 @@
                                     </div>
                                     <div class="row">
                                         <div class="col-sm-12" id="text-paste-div">
-                                            <label>Optional: Copy and paste content from social media messages, emails, or text messages from
-                                                the person you are concerned about. This content is disposed of within 2
-                                                hours of upload.
+                                            <label>Optional: Copy and paste content from social media messages, emails, or text
+                                                messages from the person you are concerned about. This content is disposed
+                                                of within 2 hours of upload.
                                             </label>
                                             <input type="text" id="pasted-text">
                                             <input type="submit" name="submitpastedtext" id="submit-pasted-text">
@@ -176,10 +177,11 @@
                     <p>
                         <small>*press "View Full Results" for detailed results after completing all required assessment steps.</small>
                     </p>
-                    <canvas id="assessment-result-graph" class = "graph"></canvas>
-                    <canvas id="description-result-graph" class = "graph"></canvas>
-                    <canvas id="image-analysis-graph" class = "graph"></canvas>
-                    <canvas id="text-analysis-graph" class = "graph"></canvas>
+                    
+                    <canvas id="assessment-result-graph" class="graph"></canvas>
+                    <canvas id="description-result-graph" class="graph"></canvas>
+                    <canvas id="image-analysis-graph" class="graph"></canvas>
+                    <canvas id="text-analysis-graph" class="graph"></canvas>
                 </div>
             </div>
 
@@ -194,7 +196,7 @@
 
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.0/js/mdb.min.js"></script>
     <script src="assets/js/app.js"></script>
-   
+
 </body>
 
 </html>
