@@ -111,6 +111,7 @@
                                                 <label>In your own words, describe the behaviors or situations that aroused your
                                                     concern.</label>
                                                 <input type="text" id="behavior-description">
+                                                <input type="submit" name="submittext" id="submit-text">
                                             </form>
                                         </div>
                                     </div>
@@ -185,28 +186,7 @@
 
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.0/js/mdb.min.js"></script>
     <script src="assets/js/app.js"></script>
-    <script>
-    
-//doughnut
-var ctxD = document.getElementById("assessment-result-graph").getContext('2d');
-var myLineChart = new Chart(ctxD, {
-    type: 'doughnut',
-    data: {
-        labels: ["Incomplete", "Example"],
-        datasets: [
-            {
-                data: [90, 10],
-                backgroundColor: ["gray", "black"],
-                hoverBackgroundColor: ["#FF5A5E", "#5AD3D1"]
-            }
-        ]
-    },
-    options: {
-        responsive: true
-    }    
-});
-            
-    </script>
+   
 </body>
 
 </html>
