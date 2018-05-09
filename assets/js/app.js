@@ -177,24 +177,57 @@ $(document).ready(function () {
 
 })
 
-// Below is the code to use with the graphs. Each graph already has an id on the index.html page, included in the "canvas" tag
 
-// var ctxD = document.getElementById("doughnutChart").getContext('2d');
-// var myLineChart = new Chart(ctxD, {
-//     type: 'doughnut',
-//     data: {
-//         labels: ["Red", "Green", "Yellow", "Grey", "Dark Grey"],
-//         datasets: [
-//             {
-//                 data: [300, 50, 100, 40, 120],
-//                 backgroundColor: ["#F7464A", "#46BFBD", "#FDB45C", "#949FB1", "#4D5360"],
-//                 hoverBackgroundColor: ["#FF5A5E", "#5AD3D1", "#FFC870", "#A8B3C5", "#616774"]
-//             }
-//         ]
-//     },
-//     options: {
-//         responsive: true
-//     }    
-// });
-            
+//You can use this function as a callback wherever you are calculating the results of your analysis to generate your graph
+    //variable = whatever your variable your result is stored in, id = the canvas id for where you want your graph to appear 
+    //in "#id" form, and idName = the same id, but in "id" form with out the hashtag
 
+    function drawResultGraph(variable, id, idName) {
+
+        console.log("result graph working")
+        var remainder = 100 - variable;
+    
+        //pass the canvas id name down through arguments instead of using it here
+        $(id).attr("data-result-value", variable);
+    
+        var ctxD = document.getElementById(idName).getContext('2d');
+        var myLineChart = new Chart(ctxD, {
+            type: 'doughnut',
+            data: {
+                labels: ["Concern", "Non-concern"],
+                datasets: [
+                    {
+                        data: [variable, remainder],
+                        backgroundColor: ["blue", "gray"],
+                        hoverBackgroundColor: ["#FF5A5E", "#5AD3D1"]
+                    }
+                ]
+            },
+            options: {
+                responsive: true
+            }
+        });
+    }
+    
+    //////////To calculate group average and print results - Incomplete as of now, but push to the array below in your function//////////////
+    
+    
+    //push your final average from your section's analysis into this array
+    var overallResultArray = [];
+    
+    function calculateRecommendationAverage(){
+    
+        for (var k = 0; k< overallResultArray.length; k++){
+            overallResultArray += overallResultArray[k];
+        };
+    
+        overallPercentage = overallResultArray / overallResultArray.length;
+    
+        if (overallPercentage > 50){
+            // this is where we can write the code for what we want to print to the results div based on our overall average
+        }else{
+    
+        };
+    
+    }
+    
