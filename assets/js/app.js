@@ -162,7 +162,9 @@ $(document).ready(function () {
             assessmentResult = (yes/countAssessment)*100;
             console.log(assessmentResult);
             drawResultGraph(assessmentResult, "#assessment-result-graph", "assessment-result-graph");
+            //Push AssessmentResult into overallResultArray
             overallResultArray.push(assessmentResult);
+            console.log(overallResultArray);
             
 
         } else {
@@ -221,12 +223,12 @@ $(document).ready(function () {
     
     //push your final average from your section's analysis into this array
     var overallResultArray = [];
-        
+    
     function calculateRecommendationAverage(){
         
         for (var k = 0; k< overallResultArray.length; k++){
             overallResultArray += overallResultArray[k];
-            console.log(overallResultArray);
+            
         };
         
         overallPercentage = overallResultArray / overallResultArray.length;
