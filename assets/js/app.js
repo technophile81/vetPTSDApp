@@ -25,8 +25,8 @@ $(document).ready(function () {
 
 
 
-    $("#assessmentstart").on("click", assessments.start);
-
+    $("#assessmentstart").on("click", assessments.start)
+    
 
     // Assessment questions
     var questions = [
@@ -141,12 +141,14 @@ $(document).ready(function () {
         if (this.id == "yes") {
             yes++;
             console.log("yes: " + yes);
-        } else {
+            nextAssessments();
+        } else if (this.id == "no"){
             no++;
             console.log("no: " + no);
+            nextAssessments();
         }
 
-        nextAssessments();
+        
     });
 
     // Call next question
@@ -160,6 +162,7 @@ $(document).ready(function () {
             assessmentResult = (yes/countAssessment)*100;
             console.log(assessmentResult);
             drawResultGraph(assessmentResult, "#assessment-result-graph", "assessment-result-graph");
+            overallResultArray.push(assessmentResult);
             
 
         } else {
@@ -220,11 +223,12 @@ $(document).ready(function () {
     var overallResultArray = [];
         
     function calculateRecommendationAverage(){
-    
+        
         for (var k = 0; k< overallResultArray.length; k++){
             overallResultArray += overallResultArray[k];
+            console.log(overallResultArray);
         };
-    
+        
         overallPercentage = overallResultArray / overallResultArray.length;
     
         if (overallPercentage > 50){
