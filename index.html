@@ -4,13 +4,15 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name=viewport content=”width=device-width, initial-scale=1”>
+    <meta name=viewport content="width=device-width", initial-scale=1”>
     <title>PTSD App</title>
     <link rel="stylesheet" href="assets/css/reset.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4"
         crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css?family=Abel|Graduate" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/style.css">
+    <script src="https://www.gstatic.com/firebasejs/5.0.2/firebase.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
         crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ"
@@ -138,8 +140,9 @@
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-sm-12" id="image-uploads-div">
-                                            image uploads ... button to another page?
-                                        </div>
+                                        <input id="URLInput" type="text" placeholder="copy and paste image URL here">
+                                        <input id="imgSub" type="submit" value="submit">
+                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-sm-12" id="text-paste-div">
@@ -196,7 +199,7 @@
 
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.0/js/mdb.min.js"></script>
     <script src="assets/js/app.js"></script>
-    <script src="../ptsd.js"></script>
+    <!-- <script src="../ptsd.js"></script> -->
 
 </body>
 
