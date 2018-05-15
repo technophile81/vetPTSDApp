@@ -1,7 +1,4 @@
 
-function logFunction(){
-    console.log("meep");
-};
 
 $(document).ready(function () {
 
@@ -88,7 +85,6 @@ function processImage() {
 $(document).on("click", "#imgSub", processImage());
 };
 
-$(document).on("click", "#imgSub", logFunction());
 
 //Assessment set up
 
