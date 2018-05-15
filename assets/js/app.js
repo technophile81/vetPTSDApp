@@ -102,6 +102,7 @@ $(document).on("click", "#imgSub", logFunction());
     var array = [];
     $("#yes").hide();
     $("#no").hide();
+    $("#assessment-div").hide();
 
     var assessments = {
         start: function () {
@@ -116,7 +117,7 @@ $(document).on("click", "#imgSub", logFunction());
 
 
 
-    $("#assessmentstart").on("click", assessments.start)
+    $("#assessmentstart").on("click", assessments.start);
     
 
     // Assessment questions
