@@ -87,6 +87,9 @@
                             </div>
 
                             <!-- Assessment Section-->
+                            <!--use collapseOne id and change the show class to hide, plus in the button above, change aria-expanded to false, the function will
+                            need ifs or whatever you decide to do for every section of the accordion-->
+
                             <div id="collapseOne" class="collapse show step-one" aria-labelledby="headingOne" data-parent="#accordion">
                                 <div class="card-body">
                                     <div class="row">
@@ -132,7 +135,7 @@
                                 <h5 class="mb-0">
                                     <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false"
                                         aria-controls="collapseThree">
-                                        <h3>Required: Upload Images And/Or Text</h3>
+                                        <h3>Optional: Upload Images</h3>
                                     </button>
                                 </h5>
                             </div>
@@ -144,6 +147,20 @@
                                         <input id="imgSub" type="submit" value="submit">
                                          </div>
                                     </div>
+                                </div>
+                            </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-header" id="headingFour">
+                                    <h5 class="mb-0">
+                                        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false"
+                                            aria-controls="collapseFour">
+                                            <h3>Optional: Text</h3>
+                                        </button>
+                                    </h5>
+                                </div>
+                            <div id="collapseFour" class="collapse step-four" aria-labelledby="headingFour" data-parent="#accordion">
+                                <div class="card-body">
                                     <div class="row">
                                         <div class="col-sm-12" id="text-paste-div">
                                             <label>Optional: Copy and paste content from social media messages, emails, or text
@@ -199,7 +216,7 @@
 
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.0/js/mdb.min.js"></script>
     <script src="assets/js/app.js"></script>
-    <!-- <script src="../ptsd.js"></script> -->
+  
 
 </body>
 
