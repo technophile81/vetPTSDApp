@@ -17,7 +17,7 @@ var database = firebase.database();
 
 
 
-//facial recognition API
+/////////////////////////////////////// facial recognition API //////////////////////////////////////////////////
 var urlArray = [];
 var responseArray = [];
 
@@ -86,7 +86,7 @@ $(document).on("click", "#imgSub", processImage());
 };
 
 
-//Assessment set up
+///////////////////////////////////////////// Assessment set up ////////////////////////////////////////////////////
 
 
 
@@ -272,7 +272,7 @@ $(document).on("click", "#imgSub", processImage());
     };
 
    
-
+/////////////////////////////////////////////////// Result Functions ///////////////////////////////////////////////////
 
 //You can use this function as a callback wherever you are calculating the results of your analysis to generate your graph
     //variable = whatever your variable your result is stored in, id = the canvas id for where you want your graph to appear 
