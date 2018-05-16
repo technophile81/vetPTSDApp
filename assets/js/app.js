@@ -17,6 +17,30 @@ $(document).ready(function () {
 var database = firebase.database();
 
 
+//Google authentication Signinwithpopup
+var provider = new firebase.auth.GoogleAuthProvider();
+provider.addScope('https://www.googleapis.com/auth/contacts.readonly');
+firebase.auth().useDeviceLanguage();
+provider.setCustomParameters({
+    'login_hint': 'user@example.com'
+  });
+firebase.auth().signInWithPopup(provider).then(function(result) {
+    // This gives you a Google Access Token. You can use it to access the Google API.
+    var token = result.credential.accessToken;
+    // The signed-in user info.
+    var user = result.user;
+    // ...
+  }).catch(function(error) {
+    // Handle Errors here.
+    var errorCode = error.code;
+    var errorMessage = error.message;
+    // The email of the user's account used.
+    var email = error.email;
+    // The firebase.auth.AuthCredential type that was used.
+    var credential = error.credential;
+    
+  });
+
 
 //Assessment set up
 
@@ -362,3 +386,96 @@ var database = firebase.database();
 
 
 });
+//HEAD
+
+        //Closing the accordion+collapseOne+
+        var clo = document.getElementsByClassName("collapseOne");
+        var i;
+        var open = null;
+        
+        for (i = 0; i < clo.length; i++) {
+          clo[i].addEventListener("click", function() {
+            if (open == this) {
+              open.classList.toggle("active");
+              open = null;
+            } else {
+              if (open != null) {
+                open.classList.toggle("active");
+              }
+              this.classList.toggle("active");
+              open = this;
+            }
+          });
+        }
+
+        var clos = document.getElementsByClassName("collapseTwo");
+        var i;
+        var wide = null;
+        
+        for (i = 0; i < clos.length; i++) {
+          clos[i].addEventListener("click", function() {
+            if (wide == this) {
+              wide.classList.toggle("active");
+              wide = null;
+            } else {
+              if (wide != null) {
+                wide.classList.toggle("active");
+              }
+              this.classList.toggle("active");
+              wide = this;
+            }
+          });
+        }
+
+        var closer = document.getElementsByClassName("collapseThree");
+        var i;
+        var wider = null;
+        
+        for (i = 0; i < closer.length; i++) {
+          closer[i].addEventListener("click", function() {
+            if (wider == this) {
+              wider.classList.toggle("active");
+              wider = null;
+            } else {
+              if (wider != null) {
+                wider.classList.toggle("active");
+              }
+              this.classList.toggle("active");
+              wider = this;
+            }
+          });
+        }
+
+        var closers = document.getElementsByClassName("collapseFour");
+        var i;
+        var opens = null;
+        
+        for (i = 0; i < closers.length; i++) {
+          closers[i].addEventListener("click", function() {
+            if (opens == this) {
+              opens.classList.toggle("active");
+              opens = null;
+            } else {
+              if (opens != null) {
+                opens.classList.toggle("active");
+              }
+              this.classList.toggle("active");
+              opens = this;
+            }
+          });
+        }
+
+//changing aria-expanded to "false"
+function killAria() {
+var why = document.getElementById("p2").getAttribute("aria-expanded");
+if (why = "true")
+console.log(killAria)
+{
+why = "false"
+} if (
+    why = "true"
+){
+document.getElementById("p2").setAttribute("aria-expanded", why);
+  document.getElementById("p2").innerHTML = "aria-expanded =" + why;
+ }
+ }
