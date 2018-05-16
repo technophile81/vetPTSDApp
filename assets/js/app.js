@@ -2,91 +2,91 @@
 
 $(document).ready(function () {
 
-  // Initialize Firebase
-  var config = {
-    apiKey: "AIzaSyCYNlGC77cCnZMyrMiKKB4TZnx6qApfqP0",
-    authDomain: "vetptsdapp.firebaseapp.com",
-    databaseURL: "https://vetptsdapp.firebaseio.com",
-    projectId: "vetptsdapp",
-    storageBucket: "vetptsdapp.appspot.com",
-    messagingSenderId: "773708000915"
-};
-firebase.initializeApp(config);
+    // Initialize Firebase
+    var config = {
+        apiKey: "AIzaSyCYNlGC77cCnZMyrMiKKB4TZnx6qApfqP0",
+        authDomain: "vetptsdapp.firebaseapp.com",
+        databaseURL: "https://vetptsdapp.firebaseio.com",
+        projectId: "vetptsdapp",
+        storageBucket: "vetptsdapp.appspot.com",
+        messagingSenderId: "773708000915"
+    };
+    firebase.initializeApp(config);
 
-var database = firebase.database();
-
-
-
-/////////////////////////////////////// facial recognition API //////////////////////////////////////////////////
-var urlArray = [];
-var responseArray = [];
+    var database = firebase.database();
 
 
-function processImage() {
 
-    // Replace the subscriptionKey string value with your valid subscription key.
-    var subscriptionKey = "b23434428c4d49d8a925cf2c0d434cbc";
+    /////////////////////////////////////// facial recognition API //////////////////////////////////////////////////
+    var urlArray = [];
+    var responseArray = [];
 
-    var uriBase = "https://westcentralus.api.cognitive.microsoft.com/face/v1.0/detect";
 
-    // Request parameters.
-    var params = {
-        "returnFaceId": "true",
-        "returnFaceLandmarks": "false",
-        "returnFaceAttributes": "emotion",
+    function processImage() {
+
+        // Replace the subscriptionKey string value with your valid subscription key.
+        var subscriptionKey = "b23434428c4d49d8a925cf2c0d434cbc";
+
+        var uriBase = "https://westcentralus.api.cognitive.microsoft.com/face/v1.0/detect";
+
+        // Request parameters.
+        var params = {
+            "returnFaceId": "true",
+            "returnFaceLandmarks": "false",
+            "returnFaceAttributes": "emotion",
+        };
+
+        // Display the image.
+        var sourceImageUrl = document.getElementById("URLInput").value;
+        // document.querySelector("#sourceImage").src = sourceImageUrl;
+        urlArray.push(sourceImageUrl);
+
+
+
+
+        // Perform the REST API call.
+        $.ajax({
+            url: uriBase + "?" + $.param(params),
+
+            // Request headers.
+            beforeSend: function (xhrObj) {
+                xhrObj.setRequestHeader("Content-Type", "application/json");
+                xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key", subscriptionKey);
+            },
+
+            type: "POST",
+
+            // Request body.
+            data: '{"url": ' + '"' + sourceImageUrl + '"}',
+        })
+
+            .done(function (data) {
+                // Show formatted JSON on webpage.
+                responseArray.push(JSON.stringify(data, null, 2));
+
+                var emotionData = data[0].faceAttributes.emotion;
+                console.log(emotionData)
+
+                database.ref().set({
+                    results: emotionData,
+                    url: urlArray
+                });
+
+                console.log(responseArray);
+            })
+
+            .fail(function (jqXHR, textStatus, errorThrown) {
+                // Display error message.
+                var errorString = (errorThrown === "") ? "Error. " : errorThrown + " (" + jqXHR.status + "): ";
+                errorString += (jqXHR.responseText === "") ? "" : (jQuery.parseJSON(jqXHR.responseText).message) ?
+                    jQuery.parseJSON(jqXHR.responseText).message : jQuery.parseJSON(jqXHR.responseText).error.message;
+                alert(errorString);
+            });
+        $(document).on("click", "#imgSub", processImage());
     };
 
-    // Display the image.
-    var sourceImageUrl = document.getElementById("URLInput").value;
-    // document.querySelector("#sourceImage").src = sourceImageUrl;
-    urlArray.push(sourceImageUrl);
 
-
-
-
-    // Perform the REST API call.
-    $.ajax({
-        url: uriBase + "?" + $.param(params),
-
-        // Request headers.
-        beforeSend: function(xhrObj){
-            xhrObj.setRequestHeader("Content-Type","application/json");
-            xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key", subscriptionKey);
-        },
-
-        type: "POST",
-
-        // Request body.
-        data: '{"url": ' + '"' + sourceImageUrl + '"}',
-    })
-
-    .done(function(data) {
-        // Show formatted JSON on webpage.
-       responseArray.push(JSON.stringify(data, null, 2));
-
-        var emotionData = data[0].faceAttributes.emotion;
-        console.log(emotionData)
-
-    database.ref().set({
-        results: emotionData,
-        url: urlArray
-    });
-
-        console.log(responseArray);
-    })
-
-    .fail(function(jqXHR, textStatus, errorThrown) {
-        // Display error message.
-        var errorString = (errorThrown === "") ? "Error. " : errorThrown + " (" + jqXHR.status + "): ";
-        errorString += (jqXHR.responseText === "") ? "" : (jQuery.parseJSON(jqXHR.responseText).message) ?
-            jQuery.parseJSON(jqXHR.responseText).message : jQuery.parseJSON(jqXHR.responseText).error.message;
-        alert(errorString);
-    });
-$(document).on("click", "#imgSub", processImage());
-};
-
-
-///////////////////////////////////////////// Assessment set up ////////////////////////////////////////////////////
+    ///////////////////////////////////////////// Assessment set up ////////////////////////////////////////////////////
 
 
 
@@ -98,23 +98,42 @@ $(document).on("click", "#imgSub", processImage());
     var array = [];
     $("#yes").hide();
     $("#no").hide();
-    $("#assessment-div").hide();
+    $("#resetbutton").hide();
+    $("#next").hide();
 
+
+
+
+    // Set up buttons to show or hide when click on start button
     var assessments = {
         start: function () {
+            countAssessment = 0;
+            assessmentResult = 0;
+            yes = 0;
+            no = 0;
+            array = [];
+           
+            $("#assessmentsq").show();
             $("#yes").show();
             $("#no").show();
+            $("#resetbutton").hide();
+            $("#next").hide();
             $("#assessmentstart").hide();
+            $("#assessment-result-graph").hide();
             callAssessments();
+            
         }
-    }
 
-
-
-
-
-    $("#assessmentstart").on("click", assessments.start);
     
+    };
+
+
+    // When clicking "start" button, Assessment begins
+    $("#assessmentstart").on("click", assessments.start);
+
+    // Assessment start again when clicked "Start Again" button
+    $("#resetbutton").on("click", assessments.start);
+        
 
     // Assessment questions
     var questions = [
@@ -230,13 +249,13 @@ $(document).on("click", "#imgSub", processImage());
             yes++;
             console.log("yes: " + yes);
             nextAssessments();
-        } else if (this.id == "no"){
+        } else if (this.id == "no") {
             no++;
             console.log("no: " + no);
             nextAssessments();
         }
 
-        
+
     });
 
     // Call next question
@@ -244,38 +263,50 @@ $(document).on("click", "#imgSub", processImage());
         countAssessment++;
         console.log("count: " + countAssessment);
         if (countAssessment == questions.length) {
-            $("#assessmentsq").html("Let's begin behavior analysis");
+            
+            $("#assessmentsq").hide();
             $("#yes").hide();
             $("#no").hide();
-            assessmentResult = (yes/countAssessment)*100;
+            
+            assessmentResult = (yes / countAssessment) * 100;
             console.log(assessmentResult);
             drawResultGraph(assessmentResult, "#assessment-result-graph", "assessment-result-graph");
-            //Push AssessmentResult into overallResultArray
+            $("#assessment-result-graph").show();
+            // Push AssessmentResult into overallResultArray
             overallResultArray.push(assessmentResult);
             console.log(overallResultArray);
             
+            
+            // Reset all varaible when assessment is done
+            // countAssessment = 0;
+            // assessmentResult = 0;
+            // yes = 0;
+            // no = 0;
+            // array = [];
+
+                      
+            
+            // Click button to restart assessment
+            $("#resetbutton").show();
+            $("#next").show();
+
+
+
 
         } else {
             callAssessments();
+            
         }
     };
+
     
-    // Reset function(if needed)
-    function reset() {
-        var countAssessment = 0;
-        var yes = 0;
-        var no = 0;
-        var array = [];
-        $("#yes").hide();
-        $("#no").hide();
-        $("#assessmentstart").show();
 
-    };
+    
 
-   
-/////////////////////////////////////////////////// Result Functions ///////////////////////////////////////////////////
 
-//You can use this function as a callback wherever you are calculating the results of your analysis to generate your graph
+    /////////////////////////////////////////////////// Result Functions ///////////////////////////////////////////////////
+
+    //You can use this function as a callback wherever you are calculating the results of your analysis to generate your graph
     //variable = whatever your variable your result is stored in, id = the canvas id for where you want your graph to appear 
     //in "#id" form, and idName = the same id, but in "id" form with out the hashtag
 
@@ -283,10 +314,10 @@ $(document).on("click", "#imgSub", processImage());
 
         console.log("result graph working")
         var remainder = 100 - variable;
-    
+
         //pass the canvas id name down through arguments instead of using it here
         $(id).attr("data-result-value", variable);
-    
+
         var ctxD = document.getElementById(idName).getContext('2d');
         var myLineChart = new Chart(ctxD, {
             type: 'doughnut',
@@ -305,31 +336,92 @@ $(document).on("click", "#imgSub", processImage());
             }
         });
     }
-    
+
     //////////To calculate group average and print results - Incomplete as of now, but push to the array below in your function//////////////
-    
-    
+
+
     //push your final average from your section's analysis into this array
     var overallResultArray = [];
-    
-    function calculateRecommendationAverage(){
-        
-        for (var k = 0; k< overallResultArray.length; k++){
+
+    function calculateRecommendationAverage() {
+
+        for (var k = 0; k < overallResultArray.length; k++) {
             overallResultArray += overallResultArray[k];
-            
+
         };
-        
+
         overallPercentage = overallResultArray / overallResultArray.length;
-    
-        if (overallPercentage > 50){
+
+        if (overallPercentage > 50) {
             // this is where we can write the code for what we want to print to the results div based on our overall average
-        }else{
-    
+        } else {
+
         };
-    
+
     }
-    
 
 
+
+
+    //Show final result when user finishes all required parts
+
+    $("#results-button-div").on("click", "button", function(){
+        if (countAssessment == questions.length){
+            
+            console.log(countAssessment == questions.length);
+            
+            $("#assessment-column").animate({right: '1000px'}, "slow");
+            var finalresults = $("#results-preview");
+            finalresults.animate({right: '851px'}, "slow");
+        
+        
+
+        
+            $("#previewcontent").html("<h1>Results</h1>");
+        
+            $("#advise").html("<p>Candy canes liquorice liquorice gingerbread chocolate cake lollipop ice cream. Ice cream chocolate jelly.Croissant brownie halvah chocolate bar ice cream cake cake. Jujubes jujubes soufflé. Cheesecake macaroon wafer liquorice sweet halvah toffee. Tart chocolate cake gummi bears gingerbread donut gingerbread cookie. Bonbon candy canes cookie. Lollipop fruitcake candy icing toffee sugar plum pie donut</p>");
+        
+        
+        }
+
+
+
+        
+        
+        
+
+
+        
+
+        
+
+        
+        
+        
+        
+        
+        
+        
+        // $("#results-preview").animate({
+            
+        //     right: '250px',
+        //     height: '200px',
+        //     width: '200px'
+
+        // });
+        
+        
+        
+        // $("#assessment-column").toggle("slide");
+        // $("#previewcontent").hide();
+        // $("#results-preview").html("<h1>Results</h1>");
+        // $("#")
+
+        
+        // if (countAssessment == questions.length){
+        //     $("#results-preview").toggle("slide", {direction: "left"}, 2000);
+        //     console.log(countAssessment == questions.length);
+        // }
+    })
 
 });

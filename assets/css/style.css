@@ -108,10 +108,84 @@ button:disabled h3{
     margin: 3% auto;
 }
 
-#results-button-div button{
+/* #results-button-div button{
     padding-top: 1%;
     border-radius: 20px;
+} */
+
+/* Button style for assessment */
+
+#yes, #no, #resetbutton, #assessmentstart{
+    
+    text-align: center;
+    cursor: pointer;
+    outline: none;
+    color: #fff;
+    background-color: blue;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0 3px #999;
 }
+
+#no{
+    background-color: rgb(80, 117, 148);
+}
+
+#resetbutton{
+    background-color: rgb(12, 184, 236);
+}
+
+#yes:hover {background-color: navy}
+#no:hover {background-color: navy}
+#resetbutton:hover {background-color: navy}
+#assessmentstart:hover {background-color: navy}
+
+#yes:active {
+  background-color: #1c0355;
+  box-shadow: 0 2px #666;
+  transform: translateY(4px);
+}
+
+#no:active {
+    background-color: #1c0355;
+    box-shadow: 0 2px #666;
+    transform: translateY(4px);
+}
+
+#resetbutton:active {
+    background-color: #1c0355;
+    box-shadow: 0 2px #666;
+    transform: translateY(4px);
+}
+
+#assessmentstart:active {
+    background-color: #1c0355;
+    box-shadow: 0 2px #666;
+    transform: translateY(4px);
+}
+
+#fullresult {
+    padding: 10px;
+    text-align: center;
+    cursor: pointer;
+    outline: none;
+    color: #fff;
+    background-color: blue;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0 3px #999;
+}
+
+#fullresult:hover {background-color: navy}
+
+#fullresult:active {
+    background-color: #1c0355;
+    box-shadow: 0 2px #666;
+    transform: translateY(4px);
+}
+
+
+
 
 
 
