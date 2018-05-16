@@ -3,9 +3,6 @@
 $(document).ready(function () {
 
 
-    
-
-
   // Initialize Firebase
   var config = {
     apiKey: "AIzaSyCYNlGC77cCnZMyrMiKKB4TZnx6qApfqP0",
@@ -20,78 +17,6 @@ $(document).ready(function () {
     var database = firebase.database();
 
 
-
-
-    /////////////////////////////////////// facial recognition API //////////////////////////////////////////////////
-    var urlArray = [];
-    var responseArray = [];
-
-
-    function processImage() {
-
-        // Replace the subscriptionKey string value with your valid subscription key.
-        var subscriptionKey = "b23434428c4d49d8a925cf2c0d434cbc";
-
-        var uriBase = "https://westcentralus.api.cognitive.microsoft.com/face/v1.0/detect";
-
-        // Request parameters.
-        var params = {
-            "returnFaceId": "true",
-            "returnFaceLandmarks": "false",
-            "returnFaceAttributes": "emotion",
-        };
-
-        // Display the image.
-        var sourceImageUrl = document.getElementById("URLInput").value;
-        // document.querySelector("#sourceImage").src = sourceImageUrl;
-        urlArray.push(sourceImageUrl);
-
-
-
-
-        // Perform the REST API call.
-        $.ajax({
-            url: uriBase + "?" + $.param(params),
-
-            // Request headers.
-            beforeSend: function (xhrObj) {
-                xhrObj.setRequestHeader("Content-Type", "application/json");
-                xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key", subscriptionKey);
-            },
-
-            type: "POST",
-
-            // Request body.
-            data: '{"url": ' + '"' + sourceImageUrl + '"}',
-        })
-
-            .done(function (data) {
-                // Show formatted JSON on webpage.
-                responseArray.push(JSON.stringify(data, null, 2));
-
-                var emotionData = data[0].faceAttributes.emotion;
-                console.log(emotionData)
-
-                database.ref().set({
-                    results: emotionData,
-                    url: urlArray
-                });
-
-                console.log(responseArray);
-            })
-
-            .fail(function (jqXHR, textStatus, errorThrown) {
-                // Display error message.
-                var errorString = (errorThrown === "") ? "Error. " : errorThrown + " (" + jqXHR.status + "): ";
-                errorString += (jqXHR.responseText === "") ? "" : (jQuery.parseJSON(jqXHR.responseText).message) ?
-                    jQuery.parseJSON(jqXHR.responseText).message : jQuery.parseJSON(jqXHR.responseText).error.message;
-                alert(errorString);
-            });
-        $(document).on("click", "#imgSub", processImage());
-    };
-
-
-    ///////////////////////////////////////////// Assessment set up ////////////////////////////////////////////////////
 
 //Google authentication Signinwithpopup
 var provider = new firebase.auth.GoogleAuthProvider();
@@ -332,13 +257,6 @@ firebase.auth().signInWithPopup(provider).then(function(result) {
     };
 
     
-
-    
-
-
-
-    /////////////////////////////////////////////////// Result Functions ///////////////////////////////////////////////////
-
     //face recognition API -------------------------------------------------------------------------------------------------------->
     // stupid bullshit change
 
@@ -432,10 +350,11 @@ firebase.auth().signInWithPopup(provider).then(function(result) {
         $("#imgSub").on("click",function(){
             processImage();
         });
+
+        //------------------------------------results functions---------------------------------------------------------->
+
+        
     
-
-
-
     //You can use this function as a callback wherever you are calculating the results of your analysis to generate your graph
     //variable = whatever your variable your result is stored in, id = the canvas id for where you want your graph to appear 
     //in "#id" form, and idName = the same id, but in "id" form with out the hashtag
@@ -503,9 +422,10 @@ firebase.auth().signInWithPopup(provider).then(function(result) {
             
             console.log(countAssessment == questions.length);
             
-            $("#assessment-column").animate({right: '2000px'}, "slow");
+            $("#assessment-column").animate({right: '2000px'}, "slow").attr("class", "md-col-0");
+            $("#assessment-column").hide();
             var finalresults = $("#results-preview");
-            finalresults.animate({right: '851px'}, "slow");
+            finalresults.animate({right: '851px'}, "slow").attr("class", "md-col-12");
         
         
 
