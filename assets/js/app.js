@@ -205,7 +205,7 @@ var database = firebase.database();
     };
 
     //face recognition API -------------------------------------------------------------------------------------------------------->
-
+    // stupid bullshit change
 
 
         var urlArray = [];
