@@ -337,6 +337,7 @@ var database = firebase.database();
     
     //push your final average from your section's analysis into this array
     var overallResultArray = [];
+  console.log(":)");
     
     function calculateRecommendationAverage(){
         
