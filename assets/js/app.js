@@ -30,6 +30,7 @@ var database = firebase.database();
     var array = [];
     $("#yes").hide();
     $("#no").hide();
+    $("#assessment-div").hide();
 
     var assessments = {
         start: function () {
@@ -44,7 +45,7 @@ var database = firebase.database();
 
 
 
-    $("#assessmentstart").on("click", assessments.start)
+    $("#assessmentstart").on("click", assessments.start);
     
 
     // Assessment questions
