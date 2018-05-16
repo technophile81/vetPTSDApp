@@ -232,95 +232,95 @@ firebase.auth().signInWithPopup(provider).then(function(result) {
     // stupid bullshit change
 
 
-        // var urlArray = [];
-        // var responseArray = [];
+        var urlArray = [];
+        var responseArray = [];
     
-        // function processImage() {
+        function processImage() {
     
-        //     // Replace the subscriptionKey string value with your valid subscription key.
-        //     var subscriptionKey = "b23434428c4d49d8a925cf2c0d434cbc";
+            // Replace the subscriptionKey string value with your valid subscription key.
+            var subscriptionKey = "b23434428c4d49d8a925cf2c0d434cbc";
     
-        //     var uriBase = "https://westcentralus.api.cognitive.microsoft.com/face/v1.0/detect";
+            var uriBase = "https://westcentralus.api.cognitive.microsoft.com/face/v1.0/detect";
     
-        //     // Request parameters.
-        //     var params = {
-        //         "returnFaceId": "true",
-        //         "returnFaceLandmarks": "false",
-        //         "returnFaceAttributes": "emotion",
-        //     };
+            // Request parameters.
+            var params = {
+                "returnFaceId": "true",
+                "returnFaceLandmarks": "false",
+                "returnFaceAttributes": "emotion",
+            };
     
-        //     // Display the image.
-        //     var sourceImageUrl = document.getElementById("URLInput").value;
-        //     // document.querySelector("#sourceImage").src = sourceImageUrl;
-        //     urlArray.push(sourceImageUrl);
-        //     // console.log(urlArray);
-    
-    
+            // Display the image.
+            var sourceImageUrl = document.getElementById("URLInput").value;
+            // document.querySelector("#sourceImage").src = sourceImageUrl;
+            urlArray.push(sourceImageUrl);
+            // console.log(urlArray);
     
     
-        //     // Perform the REST API call.
-        //     $.ajax({
-        //         url: uriBase + "?" + $.param(params),
     
-        //         // Request headers.
-        //         beforeSend: function(xhrObj){
-        //             xhrObj.setRequestHeader("Content-Type","application/json");
-        //             xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key", subscriptionKey);
-        //         },
     
-        //         type: "POST",
+            // Perform the REST API call.
+            $.ajax({
+                url: uriBase + "?" + $.param(params),
     
-        //         // Request body.
-        //         data: '{"url": ' + '"' + sourceImageUrl + '"}',
-        //     })
+                // Request headers.
+                beforeSend: function(xhrObj){
+                    xhrObj.setRequestHeader("Content-Type","application/json");
+                    xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key", subscriptionKey);
+                },
     
-        //     .done(function(data) {
-        //         // Show formatted JSON on webpage.
-        //         // $("#responseTextArea").val(JSON.stringify(data, null, 2));
+                type: "POST",
+    
+                // Request body.
+                data: '{"url": ' + '"' + sourceImageUrl + '"}',
+            })
+    
+            .done(function(data) {
+                // Show formatted JSON on webpage.
+                // $("#responseTextArea").val(JSON.stringify(data, null, 2));
               
-        //         // variable that goes deeper into response data
-        //         var emotionData = data[0].faceAttributes.emotion;
-        //         // console.log(emotionData);
+                // variable that goes deeper into response data
+                var emotionData = data[0].faceAttributes.emotion;
+                // console.log(emotionData);
     
-        //         // variable to set threshold for alert
-        //         var threshold = parseFloat(.49);
-        //         responseArray.push(emotionData);
+                // variable to set threshold for alert
+                var threshold = parseFloat(.49);
+                responseArray.push(emotionData);
     
                 
     
-        //         // array with only pertinent emotional data collected from response
-        //         var emotionalTriggers = [emotionData.anger, emotionData.contempt, emotionData.disgust, emotionData.fear, emotionData.neutral, emotionData.sadness];
+                // array with only pertinent emotional data collected from response
+                var emotionalTriggers = [emotionData.anger, emotionData.contempt, emotionData.disgust, emotionData.fear, emotionData.neutral, emotionData.sadness];
             
     
-        //         // looping through selected response data
-        //         for (var i = 0; i < emotionalTriggers.length; i++){
-        //               var emotionCheck = emotionalTriggers[i]
+                // looping through selected response data
+                for (var i = 0; i < emotionalTriggers.length; i++){
+                      var emotionCheck = emotionalTriggers[i]
                     
     
-        //         // iterating through array to find what data falls above or below the threshold declared above
+                // iterating through array to find what data falls above or below the threshold declared above
                
-        //             if( emotionCheck < threshold){
-        //                 console.log("yaaaay!!")
-        //             } else {
-        //                 console.log("NO!");
-        //             };
-        //         };
+                    if( emotionCheck < threshold){
+                        console.log("yaaaay!!")
+                    } else {
+                        console.log("NO!");
+                    };
+                };
                 
-        //     })
+            })
         
     
-        //     .fail(function(jqXHR, textStatus, errorThrown) {
-        //         // Display error message.
-        //         var errorString = (errorThrown === "") ? "Error. " : errorThrown + " (" + jqXHR.status + "): ";
-        //         errorString += (jqXHR.responseText === "") ? "" : (jQuery.parseJSON(jqXHR.responseText).message) ?
-        //             jQuery.parseJSON(jqXHR.responseText).message : jQuery.parseJSON(jqXHR.responseText).error.message;
-        //         alert(errorString);
-        //     });
-        // };
+            .fail(function(jqXHR, textStatus, errorThrown) {
+                // Display error message.
+                var errorString = (errorThrown === "") ? "Error. " : errorThrown + " (" + jqXHR.status + "): ";
+                errorString += (jqXHR.responseText === "") ? "" : (jQuery.parseJSON(jqXHR.responseText).message) ?
+                    jQuery.parseJSON(jqXHR.responseText).message : jQuery.parseJSON(jqXHR.responseText).error.message;
+                alert(errorString);
+            });
+        };
     
-        // $("#imgSub").on("click",function(){
-        //     processImage();
-        // });
+        $("#imgSub").on("click",function(){
+            processImage();
+        });
     
 
 
@@ -386,96 +386,96 @@ firebase.auth().signInWithPopup(provider).then(function(result) {
 
 
 });
-//HEAD
+// //HEAD
 
-        //Closing the accordion+collapseOne+
-        var clo = document.getElementsByClassName("collapseOne");
-        var i;
-        var open = null;
+//         //Closing the accordion+collapseOne+
+//         var clo = document.getElementsByClassName("collapseOne");
+//         var i;
+//         var open = null;
         
-        for (i = 0; i < clo.length; i++) {
-          clo[i].addEventListener("click", function() {
-            if (open == this) {
-              open.classList.toggle("active");
-              open = null;
-            } else {
-              if (open != null) {
-                open.classList.toggle("active");
-              }
-              this.classList.toggle("active");
-              open = this;
-            }
-          });
-        }
+//         for (i = 0; i < clo.length; i++) {
+//           clo[i].addEventListener("click", function() {
+//             if (open == this) {
+//               open.classList.toggle("active");
+//               open = null;
+//             } else {
+//               if (open != null) {
+//                 open.classList.toggle("active");
+//               }
+//               this.classList.toggle("active");
+//               open = this;
+//             }
+//           });
+//         }
 
-        var clos = document.getElementsByClassName("collapseTwo");
-        var i;
-        var wide = null;
+//         var clos = document.getElementsByClassName("collapseTwo");
+//         var i;
+//         var wide = null;
         
-        for (i = 0; i < clos.length; i++) {
-          clos[i].addEventListener("click", function() {
-            if (wide == this) {
-              wide.classList.toggle("active");
-              wide = null;
-            } else {
-              if (wide != null) {
-                wide.classList.toggle("active");
-              }
-              this.classList.toggle("active");
-              wide = this;
-            }
-          });
-        }
+//         for (i = 0; i < clos.length; i++) {
+//           clos[i].addEventListener("click", function() {
+//             if (wide == this) {
+//               wide.classList.toggle("active");
+//               wide = null;
+//             } else {
+//               if (wide != null) {
+//                 wide.classList.toggle("active");
+//               }
+//               this.classList.toggle("active");
+//               wide = this;
+//             }
+//           });
+//         }
 
-        var closer = document.getElementsByClassName("collapseThree");
-        var i;
-        var wider = null;
+//         var closer = document.getElementsByClassName("collapseThree");
+//         var i;
+//         var wider = null;
         
-        for (i = 0; i < closer.length; i++) {
-          closer[i].addEventListener("click", function() {
-            if (wider == this) {
-              wider.classList.toggle("active");
-              wider = null;
-            } else {
-              if (wider != null) {
-                wider.classList.toggle("active");
-              }
-              this.classList.toggle("active");
-              wider = this;
-            }
-          });
-        }
+//         for (i = 0; i < closer.length; i++) {
+//           closer[i].addEventListener("click", function() {
+//             if (wider == this) {
+//               wider.classList.toggle("active");
+//               wider = null;
+//             } else {
+//               if (wider != null) {
+//                 wider.classList.toggle("active");
+//               }
+//               this.classList.toggle("active");
+//               wider = this;
+//             }
+//           });
+//         }
 
-        var closers = document.getElementsByClassName("collapseFour");
-        var i;
-        var opens = null;
+//         var closers = document.getElementsByClassName("collapseFour");
+//         var i;
+//         var opens = null;
         
-        for (i = 0; i < closers.length; i++) {
-          closers[i].addEventListener("click", function() {
-            if (opens == this) {
-              opens.classList.toggle("active");
-              opens = null;
-            } else {
-              if (opens != null) {
-                opens.classList.toggle("active");
-              }
-              this.classList.toggle("active");
-              opens = this;
-            }
-          });
-        }
+//         for (i = 0; i < closers.length; i++) {
+//           closers[i].addEventListener("click", function() {
+//             if (opens == this) {
+//               opens.classList.toggle("active");
+//               opens = null;
+//             } else {
+//               if (opens != null) {
+//                 opens.classList.toggle("active");
+//               }
+//               this.classList.toggle("active");
+//               opens = this;
+//             }
+//           });
+//         }
 
-//changing aria-expanded to "false"
-function killAria() {
-var why = document.getElementById("p2").getAttribute("aria-expanded");
-if (why = "true")
-console.log(killAria)
-{
-why = "false"
-} if (
-    why = "true"
-){
-document.getElementById("p2").setAttribute("aria-expanded", why);
-  document.getElementById("p2").innerHTML = "aria-expanded =" + why;
- }
- }
+// //changing aria-expanded to "false"
+// function killAria() {
+// var why = document.getElementById("p2").getAttribute("aria-expanded");
+// if (why = "true")
+// console.log(killAria)
+// {
+// why = "false"
+// } if (
+//     why = "true"
+// ){
+// document.getElementById("p2").setAttribute("aria-expanded", why);
+//   document.getElementById("p2").innerHTML = "aria-expanded =" + why;
+//  }
+//  }
