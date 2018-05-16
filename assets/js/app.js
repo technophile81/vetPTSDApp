@@ -497,4 +497,167 @@ firebase.auth().signInWithPopup(provider).then(function(result) {
 
 
 
+<<<<<<< HEAD
 });
+=======
+});
+// //HEAD
+
+//         //Closing the accordion+collapseOne+
+//         var clo = document.getElementsByClassName("collapseOne");
+//         var i;
+//         var open = null;
+        
+//         for (i = 0; i < clo.length; i++) {
+//           clo[i].addEventListener("click", function() {
+//             if (open == this) {
+//               open.classList.toggle("active");
+//               open = null;
+//             } else {
+//               if (open != null) {
+//                 open.classList.toggle("active");
+//               }
+//               this.classList.toggle("active");
+//               open = this;
+//             }
+//           });
+//         }
+
+//         var clos = document.getElementsByClassName("collapseTwo");
+//         var i;
+//         var wide = null;
+        
+//         for (i = 0; i < clos.length; i++) {
+//           clos[i].addEventListener("click", function() {
+//             if (wide == this) {
+//               wide.classList.toggle("active");
+//               wide = null;
+//             } else {
+//               if (wide != null) {
+//                 wide.classList.toggle("active");
+//               }
+//               this.classList.toggle("active");
+//               wide = this;
+//             }
+//           });
+//         }
+
+
+//         var closer = document.getElementsByClassName("collapseThree");
+//         var i;
+//         var wider = null;
+        
+//         for (i = 0; i < closer.length; i++) {
+//           closer[i].addEventListener("click", function() {
+//             if (wider == this) {
+//               wider.classList.toggle("active");
+//               wider = null;
+//             } else {
+//               if (wider != null) {
+//                 wider.classList.toggle("active");
+//               }
+//               this.classList.toggle("active");
+//               wider = this;
+//             }
+//           });
+//         }
+
+//         var closers = document.getElementsByClassName("collapseFour");
+//         var i;
+//         var opens = null;
+        
+//         for (i = 0; i < closers.length; i++) {
+//           closers[i].addEventListener("click", function() {
+//             if (opens == this) {
+//               opens.classList.toggle("active");
+//               opens = null;
+//             } else {
+//               if (opens != null) {
+//                 opens.classList.toggle("active");
+//               }
+//               this.classList.toggle("active");
+//               opens = this;
+//             }
+//           });
+//         }
+
+
+
+    //Show final result when user finishes all required parts
+
+    $("#results-button-div").on("click", "button", function(){
+        if (countAssessment == questions.length){
+            
+            console.log(countAssessment == questions.length);
+            
+            $("#assessment-column").animate({right: '1000px'}, "slow");
+            var finalresults = $("#results-preview");
+            finalresults.animate({right: '851px'}, "slow");
+        
+        
+
+        
+            $("#previewcontent").html("<h1>Results</h1>");
+        
+            $("#advise").html("<p>Candy canes liquorice liquorice gingerbread chocolate cake lollipop ice cream. Ice cream chocolate jelly.Croissant brownie halvah chocolate bar ice cream cake cake. Jujubes jujubes soufflé. Cheesecake macaroon wafer liquorice sweet halvah toffee. Tart chocolate cake gummi bears gingerbread donut gingerbread cookie. Bonbon candy canes cookie. Lollipop fruitcake candy icing toffee sugar plum pie donut</p>");
+        
+        
+        }
+
+
+
+        
+        
+        
+
+
+        
+
+        
+
+        
+        
+        
+        
+        
+        
+        
+        // $("#results-preview").animate({
+            
+        //     right: '250px',
+        //     height: '200px',
+        //     width: '200px'
+
+        // });
+        
+        
+        
+        // $("#assessment-column").toggle("slide");
+        // $("#previewcontent").hide();
+        // $("#results-preview").html("<h1>Results</h1>");
+        // $("#")
+
+        
+        // if (countAssessment == questions.length){
+        //     $("#results-preview").toggle("slide", {direction: "left"}, 2000);
+        //     console.log(countAssessment == questions.length);
+        // }
+    })
+
+
+//changing aria-expanded to "false"
+// function killAria() {
+// var why = document.getElementById("p2").getAttribute("aria-expanded");
+// if (why = "true")
+// console.log(killAria)
+// {
+// why = "false"
+// } if (
+//     why = "true"
+// ){
+// document.getElementById("p2").setAttribute("aria-expanded", why);
+//   document.getElementById("p2").innerHTML = "aria-expanded =" + why;
+//  }
+//  }
+
+>>>>>>> 90b26b6453b6b322092ddc119d9f5d114249c908
