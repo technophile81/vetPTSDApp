@@ -503,7 +503,7 @@ firebase.auth().signInWithPopup(provider).then(function(result) {
             
             console.log(countAssessment == questions.length);
             
-            $("#assessment-column").animate({right: '1000px'}, "slow");
+            $("#assessment-column").animate({right: '2000px'}, "slow");
             var finalresults = $("#results-preview");
             finalresults.animate({right: '851px'}, "slow");
         
