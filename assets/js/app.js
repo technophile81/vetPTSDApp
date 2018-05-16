@@ -2,6 +2,7 @@
 
 $(document).ready(function () {
 
+
     // Initialize Firebase
     var config = {
         apiKey: "AIzaSyCYNlGC77cCnZMyrMiKKB4TZnx6qApfqP0",
@@ -13,7 +14,20 @@ $(document).ready(function () {
     };
     firebase.initializeApp(config);
 
+
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyCYNlGC77cCnZMyrMiKKB4TZnx6qApfqP0",
+    authDomain: "vetptsdapp.firebaseapp.com",
+    databaseURL: "https://vetptsdapp.firebaseio.com",
+    projectId: "vetptsdapp",
+    storageBucket: "vetptsdapp.appspot.com",
+    messagingSenderId: "773708000915"
+  };
+  firebase.initializeApp(config);
+
     var database = firebase.database();
+
 
 
 
@@ -87,6 +101,33 @@ $(document).ready(function () {
 
 
     ///////////////////////////////////////////// Assessment set up ////////////////////////////////////////////////////
+
+//Google authentication Signinwithpopup
+var provider = new firebase.auth.GoogleAuthProvider();
+provider.addScope('https://www.googleapis.com/auth/contacts.readonly');
+firebase.auth().useDeviceLanguage();
+provider.setCustomParameters({
+    'login_hint': 'user@example.com'
+  });
+firebase.auth().signInWithPopup(provider).then(function(result) {
+    // This gives you a Google Access Token. You can use it to access the Google API.
+    var token = result.credential.accessToken;
+    // The signed-in user info.
+    var user = result.user;
+    // ...
+  }).catch(function(error) {
+    // Handle Errors here.
+    var errorCode = error.code;
+    var errorMessage = error.message;
+    // The email of the user's account used.
+    var email = error.email;
+    // The firebase.auth.AuthCredential type that was used.
+    var credential = error.credential;
+    
+  });
+
+
+//Assessment set up
 
 
 
@@ -304,7 +345,105 @@ $(document).ready(function () {
     
 
 
+
     /////////////////////////////////////////////////// Result Functions ///////////////////////////////////////////////////
+
+    //face recognition API -------------------------------------------------------------------------------------------------------->
+    // stupid bullshit change
+
+
+        var urlArray = [];
+        var responseArray = [];
+    
+        function processImage() {
+    
+            // Replace the subscriptionKey string value with your valid subscription key.
+            var subscriptionKey = "b23434428c4d49d8a925cf2c0d434cbc";
+    
+            var uriBase = "https://westcentralus.api.cognitive.microsoft.com/face/v1.0/detect";
+    
+            // Request parameters.
+            var params = {
+                "returnFaceId": "true",
+                "returnFaceLandmarks": "false",
+                "returnFaceAttributes": "emotion",
+            };
+    
+            // Display the image.
+            var sourceImageUrl = document.getElementById("URLInput").value;
+            // document.querySelector("#sourceImage").src = sourceImageUrl;
+            urlArray.push(sourceImageUrl);
+            // console.log(urlArray);
+    
+    
+    
+    
+            // Perform the REST API call.
+            $.ajax({
+                url: uriBase + "?" + $.param(params),
+    
+                // Request headers.
+                beforeSend: function(xhrObj){
+                    xhrObj.setRequestHeader("Content-Type","application/json");
+                    xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key", subscriptionKey);
+                },
+    
+                type: "POST",
+    
+                // Request body.
+                data: '{"url": ' + '"' + sourceImageUrl + '"}',
+            })
+    
+            .done(function(data) {
+                // Show formatted JSON on webpage.
+                // $("#responseTextArea").val(JSON.stringify(data, null, 2));
+              
+                // variable that goes deeper into response data
+                var emotionData = data[0].faceAttributes.emotion;
+                // console.log(emotionData);
+    
+                // variable to set threshold for alert
+                var threshold = parseFloat(.49);
+                responseArray.push(emotionData);
+    
+                
+    
+                // array with only pertinent emotional data collected from response
+                var emotionalTriggers = [emotionData.anger, emotionData.contempt, emotionData.disgust, emotionData.fear, emotionData.neutral, emotionData.sadness];
+            
+    
+                // looping through selected response data
+                for (var i = 0; i < emotionalTriggers.length; i++){
+                      var emotionCheck = emotionalTriggers[i]
+                    
+    
+                // iterating through array to find what data falls above or below the threshold declared above
+               
+                    if( emotionCheck < threshold){
+                        console.log("yaaaay!!")
+                    } else {
+                        console.log("NO!");
+                    };
+                };
+                
+            })
+        
+    
+            .fail(function(jqXHR, textStatus, errorThrown) {
+                // Display error message.
+                var errorString = (errorThrown === "") ? "Error. " : errorThrown + " (" + jqXHR.status + "): ";
+                errorString += (jqXHR.responseText === "") ? "" : (jQuery.parseJSON(jqXHR.responseText).message) ?
+                    jQuery.parseJSON(jqXHR.responseText).message : jQuery.parseJSON(jqXHR.responseText).error.message;
+                alert(errorString);
+            });
+        };
+    
+        $("#imgSub").on("click",function(){
+            processImage();
+        });
+    
+
+
 
     //You can use this function as a callback wherever you are calculating the results of your analysis to generate your graph
     //variable = whatever your variable your result is stored in, id = the canvas id for where you want your graph to appear 
@@ -360,6 +499,93 @@ $(document).ready(function () {
 
     }
 
+    
+    database.ref().set({
+        test: "test2"
+    });
+
+
+
+});
+//HEAD
+
+        //Closing the accordion+collapseOne+
+        var clo = document.getElementsByClassName("collapseOne");
+        var i;
+        var open = null;
+        
+        for (i = 0; i < clo.length; i++) {
+          clo[i].addEventListener("click", function() {
+            if (open == this) {
+              open.classList.toggle("active");
+              open = null;
+            } else {
+              if (open != null) {
+                open.classList.toggle("active");
+              }
+              this.classList.toggle("active");
+              open = this;
+            }
+          });
+        }
+
+        var clos = document.getElementsByClassName("collapseTwo");
+        var i;
+        var wide = null;
+        
+        for (i = 0; i < clos.length; i++) {
+          clos[i].addEventListener("click", function() {
+            if (wide == this) {
+              wide.classList.toggle("active");
+              wide = null;
+            } else {
+              if (wide != null) {
+                wide.classList.toggle("active");
+              }
+              this.classList.toggle("active");
+              wide = this;
+            }
+          });
+        }
+
+
+        var closer = document.getElementsByClassName("collapseThree");
+        var i;
+        var wider = null;
+        
+        for (i = 0; i < closer.length; i++) {
+          closer[i].addEventListener("click", function() {
+            if (wider == this) {
+              wider.classList.toggle("active");
+              wider = null;
+            } else {
+              if (wider != null) {
+                wider.classList.toggle("active");
+              }
+              this.classList.toggle("active");
+              wider = this;
+            }
+          });
+        }
+
+        var closers = document.getElementsByClassName("collapseFour");
+        var i;
+        var opens = null;
+        
+        for (i = 0; i < closers.length; i++) {
+          closers[i].addEventListener("click", function() {
+            if (opens == this) {
+              opens.classList.toggle("active");
+              opens = null;
+            } else {
+              if (opens != null) {
+                opens.classList.toggle("active");
+              }
+              this.classList.toggle("active");
+              opens = this;
+            }
+          });
+        }
 
 
 
@@ -424,4 +650,19 @@ $(document).ready(function () {
         // }
     })
 
-});
+
+//changing aria-expanded to "false"
+function killAria() {
+var why = document.getElementById("p2").getAttribute("aria-expanded");
+if (why = "true")
+console.log(killAria)
+{
+why = "false"
+} if (
+    why = "true"
+){
+document.getElementById("p2").setAttribute("aria-expanded", why);
+  document.getElementById("p2").innerHTML = "aria-expanded =" + why;
+ }
+ }
+
