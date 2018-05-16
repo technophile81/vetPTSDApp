@@ -3,16 +3,7 @@
 $(document).ready(function () {
 
 
-    // Initialize Firebase
-    var config = {
-        apiKey: "AIzaSyCYNlGC77cCnZMyrMiKKB4TZnx6qApfqP0",
-        authDomain: "vetptsdapp.firebaseapp.com",
-        databaseURL: "https://vetptsdapp.firebaseio.com",
-        projectId: "vetptsdapp",
-        storageBucket: "vetptsdapp.appspot.com",
-        messagingSenderId: "773708000915"
-    };
-    firebase.initializeApp(config);
+    
 
 
   // Initialize Firebase
@@ -140,7 +131,7 @@ firebase.auth().signInWithPopup(provider).then(function(result) {
     $("#yes").hide();
     $("#no").hide();
     $("#resetbutton").hide();
-    $("#next").hide();
+    
 
 
 
@@ -158,7 +149,7 @@ firebase.auth().signInWithPopup(provider).then(function(result) {
             $("#yes").show();
             $("#no").show();
             $("#resetbutton").hide();
-            $("#next").hide();
+            
             $("#assessmentstart").hide();
             $("#assessment-result-graph").hide();
             callAssessments();
@@ -329,7 +320,7 @@ firebase.auth().signInWithPopup(provider).then(function(result) {
             
             // Click button to restart assessment
             $("#resetbutton").show();
-            $("#next").show();
+            
 
 
 
