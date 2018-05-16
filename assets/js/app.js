@@ -427,10 +427,34 @@ firebase.auth().signInWithPopup(provider).then(function(result) {
             var finalresults = $("#results-preview");
             finalresults.animate({right: '851px'}, "slow").attr("class", "md-col-12");
         
-        
+            $("#assessment-result-graph").css({
+                "max-width":"25%",
+                "float":"left",
+                "text-align":"center"
+            });
+
+            $("#description-result-graph").css({
+                "max-width":"25%",
+                "float":"left",
+                "text-align":"center"
+            });
+
+            $("#image-analysis-graph").css({
+                "max-width":"25%",
+                "float":"left",
+                "text-align":"center"
+            });
+
+            $("#text-analysis-graph").css({
+                "max-width":"25%",
+                "float":"left",
+                "text-align":"center"
+            });
 
         
-            $("#previewcontent").html("<h1>Results</h1>");
+            $("#previewcontent").html("<h1>Results</h1>").css({
+                "text-align":"center"});
+                
         
             $("#advise").html("<p>Candy canes liquorice liquorice gingerbread chocolate cake lollipop ice cream. Ice cream chocolate jelly.Croissant brownie halvah chocolate bar ice cream cake cake. Jujubes jujubes soufflé. Cheesecake macaroon wafer liquorice sweet halvah toffee. Tart chocolate cake gummi bears gingerbread donut gingerbread cookie. Bonbon candy canes cookie. Lollipop fruitcake candy icing toffee sugar plum pie donut</p>");
         
