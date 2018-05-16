@@ -3,6 +3,9 @@
 $(document).ready(function () {
 
 
+    
+
+
   // Initialize Firebase
   var config = {
     apiKey: "AIzaSyCYNlGC77cCnZMyrMiKKB4TZnx6qApfqP0",
@@ -14,8 +17,81 @@ $(document).ready(function () {
   };
   firebase.initializeApp(config);
 
-var database = firebase.database();
+    var database = firebase.database();
 
+
+
+
+    /////////////////////////////////////// facial recognition API //////////////////////////////////////////////////
+    var urlArray = [];
+    var responseArray = [];
+
+
+    function processImage() {
+
+        // Replace the subscriptionKey string value with your valid subscription key.
+        var subscriptionKey = "b23434428c4d49d8a925cf2c0d434cbc";
+
+        var uriBase = "https://westcentralus.api.cognitive.microsoft.com/face/v1.0/detect";
+
+        // Request parameters.
+        var params = {
+            "returnFaceId": "true",
+            "returnFaceLandmarks": "false",
+            "returnFaceAttributes": "emotion",
+        };
+
+        // Display the image.
+        var sourceImageUrl = document.getElementById("URLInput").value;
+        // document.querySelector("#sourceImage").src = sourceImageUrl;
+        urlArray.push(sourceImageUrl);
+
+
+
+
+        // Perform the REST API call.
+        $.ajax({
+            url: uriBase + "?" + $.param(params),
+
+            // Request headers.
+            beforeSend: function (xhrObj) {
+                xhrObj.setRequestHeader("Content-Type", "application/json");
+                xhrObj.setRequestHeader("Ocp-Apim-Subscription-Key", subscriptionKey);
+            },
+
+            type: "POST",
+
+            // Request body.
+            data: '{"url": ' + '"' + sourceImageUrl + '"}',
+        })
+
+            .done(function (data) {
+                // Show formatted JSON on webpage.
+                responseArray.push(JSON.stringify(data, null, 2));
+
+                var emotionData = data[0].faceAttributes.emotion;
+                console.log(emotionData)
+
+                database.ref().set({
+                    results: emotionData,
+                    url: urlArray
+                });
+
+                console.log(responseArray);
+            })
+
+            .fail(function (jqXHR, textStatus, errorThrown) {
+                // Display error message.
+                var errorString = (errorThrown === "") ? "Error. " : errorThrown + " (" + jqXHR.status + "): ";
+                errorString += (jqXHR.responseText === "") ? "" : (jQuery.parseJSON(jqXHR.responseText).message) ?
+                    jQuery.parseJSON(jqXHR.responseText).message : jQuery.parseJSON(jqXHR.responseText).error.message;
+                alert(errorString);
+            });
+        $(document).on("click", "#imgSub", processImage());
+    };
+
+
+    ///////////////////////////////////////////// Assessment set up ////////////////////////////////////////////////////
 
 //Google authentication Signinwithpopup
 var provider = new firebase.auth.GoogleAuthProvider();
@@ -54,23 +130,42 @@ firebase.auth().signInWithPopup(provider).then(function(result) {
     var array = [];
     $("#yes").hide();
     $("#no").hide();
-    $("#assessment-div").hide();
+    $("#resetbutton").hide();
+    
 
+
+
+
+    // Set up buttons to show or hide when click on start button
     var assessments = {
         start: function () {
+            countAssessment = 0;
+            assessmentResult = 0;
+            yes = 0;
+            no = 0;
+            array = [];
+           
+            $("#assessmentsq").show();
             $("#yes").show();
             $("#no").show();
+            $("#resetbutton").hide();
+            
             $("#assessmentstart").hide();
+            $("#assessment-result-graph").hide();
             callAssessments();
+            
         }
-    }
 
-
-
-
-
-    $("#assessmentstart").on("click", assessments.start);
     
+    };
+
+
+    // When clicking "start" button, Assessment begins
+    $("#assessmentstart").on("click", assessments.start);
+
+    // Assessment start again when clicked "Start Again" button
+    $("#resetbutton").on("click", assessments.start);
+        
 
     // Assessment questions
     var questions = [
@@ -186,13 +281,13 @@ firebase.auth().signInWithPopup(provider).then(function(result) {
             yes++;
             console.log("yes: " + yes);
             nextAssessments();
-        } else if (this.id == "no"){
+        } else if (this.id == "no") {
             no++;
             console.log("no: " + no);
             nextAssessments();
         }
 
-        
+
     });
 
     // Call next question
@@ -200,33 +295,49 @@ firebase.auth().signInWithPopup(provider).then(function(result) {
         countAssessment++;
         console.log("count: " + countAssessment);
         if (countAssessment == questions.length) {
-            $("#assessmentsq").html("Let's begin behavior analysis");
+            
+            $("#assessmentsq").hide();
             $("#yes").hide();
             $("#no").hide();
-            assessmentResult = (yes/countAssessment)*100;
+            
+            assessmentResult = (yes / countAssessment) * 100;
             console.log(assessmentResult);
             drawResultGraph(assessmentResult, "#assessment-result-graph", "assessment-result-graph");
-            //Push AssessmentResult into overallResultArray
+            $("#assessment-result-graph").show();
+            // Push AssessmentResult into overallResultArray
             overallResultArray.push(assessmentResult);
             console.log(overallResultArray);
             
+            
+            // Reset all varaible when assessment is done
+            // countAssessment = 0;
+            // assessmentResult = 0;
+            // yes = 0;
+            // no = 0;
+            // array = [];
+
+                      
+            
+            // Click button to restart assessment
+            $("#resetbutton").show();
+            
+
+
+
 
         } else {
             callAssessments();
+            
         }
     };
-    
-    // Reset function(if needed)
-    function reset() {
-        var countAssessment = 0;
-        var yes = 0;
-        var no = 0;
-        var array = [];
-        $("#yes").hide();
-        $("#no").hide();
-        $("#assessmentstart").show();
 
-    };
+    
+
+    
+
+
+
+    /////////////////////////////////////////////////// Result Functions ///////////////////////////////////////////////////
 
     //face recognition API -------------------------------------------------------------------------------------------------------->
     // stupid bullshit change
@@ -325,7 +436,7 @@ firebase.auth().signInWithPopup(provider).then(function(result) {
 
 
 
-//You can use this function as a callback wherever you are calculating the results of your analysis to generate your graph
+    //You can use this function as a callback wherever you are calculating the results of your analysis to generate your graph
     //variable = whatever your variable your result is stored in, id = the canvas id for where you want your graph to appear 
     //in "#id" form, and idName = the same id, but in "id" form with out the hashtag
 
@@ -333,10 +444,10 @@ firebase.auth().signInWithPopup(provider).then(function(result) {
 
         console.log("result graph working")
         var remainder = 100 - variable;
-    
+
         //pass the canvas id name down through arguments instead of using it here
         $(id).attr("data-result-value", variable);
-    
+
         var ctxD = document.getElementById(idName).getContext('2d');
         var myLineChart = new Chart(ctxD, {
             type: 'doughnut',
@@ -355,29 +466,30 @@ firebase.auth().signInWithPopup(provider).then(function(result) {
             }
         });
     }
-    
+
     //////////To calculate group average and print results - Incomplete as of now, but push to the array below in your function//////////////
-    
-    
+
+
     //push your final average from your section's analysis into this array
     var overallResultArray = [];
-    
-    function calculateRecommendationAverage(){
-        
-        for (var k = 0; k< overallResultArray.length; k++){
+
+    function calculateRecommendationAverage() {
+
+        for (var k = 0; k < overallResultArray.length; k++) {
             overallResultArray += overallResultArray[k];
-            
+
         };
-        
+
         overallPercentage = overallResultArray / overallResultArray.length;
-    
-        if (overallPercentage > 50){
+
+        if (overallPercentage > 50) {
             // this is where we can write the code for what we want to print to the results div based on our overall average
-        }else{
-    
+        } else {
+
         };
-    
+
     }
+
     
     database.ref().set({
         test: "test2"
@@ -386,96 +498,3 @@ firebase.auth().signInWithPopup(provider).then(function(result) {
 
 
 });
-// //HEAD
-
-//         //Closing the accordion+collapseOne+
-//         var clo = document.getElementsByClassName("collapseOne");
-//         var i;
-//         var open = null;
-        
-//         for (i = 0; i < clo.length; i++) {
-//           clo[i].addEventListener("click", function() {
-//             if (open == this) {
-//               open.classList.toggle("active");
-//               open = null;
-//             } else {
-//               if (open != null) {
-//                 open.classList.toggle("active");
-//               }
-//               this.classList.toggle("active");
-//               open = this;
-//             }
-//           });
-//         }
-
-//         var clos = document.getElementsByClassName("collapseTwo");
-//         var i;
-//         var wide = null;
-        
-//         for (i = 0; i < clos.length; i++) {
-//           clos[i].addEventListener("click", function() {
-//             if (wide == this) {
-//               wide.classList.toggle("active");
-//               wide = null;
-//             } else {
-//               if (wide != null) {
-//                 wide.classList.toggle("active");
-//               }
-//               this.classList.toggle("active");
-//               wide = this;
-//             }
-//           });
-//         }
-
-//         var closer = document.getElementsByClassName("collapseThree");
-//         var i;
-//         var wider = null;
-        
-//         for (i = 0; i < closer.length; i++) {
-//           closer[i].addEventListener("click", function() {
-//             if (wider == this) {
-//               wider.classList.toggle("active");
-//               wider = null;
-//             } else {
-//               if (wider != null) {
-//                 wider.classList.toggle("active");
-//               }
-//               this.classList.toggle("active");
-//               wider = this;
-//             }
-//           });
-//         }
-
-//         var closers = document.getElementsByClassName("collapseFour");
-//         var i;
-//         var opens = null;
-        
-//         for (i = 0; i < closers.length; i++) {
-//           closers[i].addEventListener("click", function() {
-//             if (opens == this) {
-//               opens.classList.toggle("active");
-//               opens = null;
-//             } else {
-//               if (opens != null) {
-//                 opens.classList.toggle("active");
-//               }
-//               this.classList.toggle("active");
-//               opens = this;
-//             }
-//           });
-//         }
-
-// //changing aria-expanded to "false"
-// function killAria() {
-// var why = document.getElementById("p2").getAttribute("aria-expanded");
-// if (why = "true")
-// console.log(killAria)
-// {
-// why = "false"
-// } if (
-//     why = "true"
-// ){
-// document.getElementById("p2").setAttribute("aria-expanded", why);
-//   document.getElementById("p2").innerHTML = "aria-expanded =" + why;
-//  }
-//  }

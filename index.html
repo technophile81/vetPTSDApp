@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name=viewport content="width=device-width", initial-scale=1”>
+    <meta name=viewport content="width=device-width" , initial-scale=1”>
     <title>PTSD App</title>
     <link rel="stylesheet" href="assets/css/reset.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4"
@@ -91,7 +91,9 @@
                             <!--use collapseOne id and change the show class to hide, plus in the button above, change aria-expanded to false, the function will
                             need ifs or whatever you decide to do for every section of the accordion-->
 
-                            <div id="collapseOne" class="collapse show step-one" aria-labelledby="headingOne" data-parent="#accordion">
+
+                            <!-- Change class from "collapse show step-one to collapse"     -->
+                            <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-sm-12" id="assessment-div">
@@ -100,6 +102,8 @@
                                             <button id="assessmentstart">Start</button>
                                             <button id="yes">Yes</button>
                                             <button id="no">No</button>
+                                            <button id="resetbutton">Start Again</button>
+                                            
 
                                         </div>
 
@@ -144,29 +148,29 @@
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-sm-12" id="image-uploads-div">
-                                        <input id="URLInput" type="text" placeholder="copy and paste image URL here">
-                                        <input id="imgSub" type="submit" value="submit">
-                                         </div>
+                                            <input id="URLInput" type="text" placeholder="copy and paste image URL here">
+                                            <input id="imgSub" type="submit" value="submit">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header" id="headingFour">
+                                <h5 class="mb-0">
+                                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false"
+                                        aria-controls="collapseFour">
+                                        <h3>Optional: Text</h3>
+                                    </button>
+                                </h5>
                             </div>
-                            <div class="card">
-                                <div class="card-header" id="headingFour">
-                                    <h5 class="mb-0">
-                                        <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapseFour" aria-expanded="false"
-                                            aria-controls="collapseFour">
-                                            <h3>Optional: Text</h3>
-                                        </button>
-                                    </h5>
-                                </div>
                             <div id="collapseFour" class="collapse step-four" aria-labelledby="headingFour" data-parent="#accordion">
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-sm-12" id="text-paste-div">
                                             <label>Optional: Copy and paste content from social media messages, emails, or text
-                                                messages from the person you are concerned about, with their permission. This content is disposed
-                                                of within 2 hours of upload.
+                                                messages from the person you are concerned about, with their permission.
+                                                This content is disposed of within 2 hours of upload.
                                             </label>
                                             <input type="text" id="pasted-text">
                                             <input type="submit" name="submitpastedtext" id="submit-pasted-text">
@@ -183,8 +187,9 @@
                     <div class="row">
                         <div class="col-sm-12" id="results-button-div">
                             <a href="#">
-                                <button type="button" disabled>
-                                    <h3>View Full Results</h3>
+                                <!-- Disable -->
+                                <button id="fullresult">
+                                    View Full Results
                                 </button>
                             </a>
                             <p>
@@ -194,15 +199,22 @@
                     </div>
                 </div>
                 <div class="col-md-3 col-sm-12" id="results-preview">
-                    <h3>Results Preview</h3>
-                    <p>
-                        <small>*press "View Full Results" for detailed results after completing all required assessment steps.</small>
-                    </p>
-                    
-                    <canvas id="assessment-result-graph" class="graph"></canvas>
-                    <canvas id="description-result-graph" class="graph"></canvas>
-                    <canvas id="image-analysis-graph" class="graph"></canvas>
-                    <canvas id="text-analysis-graph" class="graph"></canvas>
+                    <div id="previewcontent">
+
+                        <h3>Results Preview</h3>
+                        <p>
+                            <small>*press "View Full Results" for detailed results after completing all required assessment steps.</small>
+                        </p>
+                    </div>
+                    <div>
+                        <canvas id="assessment-result-graph" class="graph"></canvas>
+                        <canvas id="description-result-graph" class="graph"></canvas>
+                        <canvas id="image-analysis-graph" class="graph"></canvas>
+                        <canvas id="text-analysis-graph" class="graph"></canvas>
+                    </div>
+                    <div id="advise">
+
+                    </div>
                 </div>
             </div>
 
@@ -217,6 +229,7 @@
 
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.5.0/js/mdb.min.js"></script>
     <script src="assets/js/app.js"></script>
+
 
 </body>
 
