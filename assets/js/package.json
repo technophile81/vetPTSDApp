@@ -1,0 +1,21 @@
+{
+  "name": "js",
+  "version": "1.0.0",
+  "description": "ptsd app",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "vetPTSDApp"
+  },
+  "keywords": [
+    "ptsd"
+  ],
+  "author": "Brian, Kwanhee, Rob, Grace",
+  "license": "ISC",
+  "dependencies": {
+    "watson-developer-cloud": "^3.4.1"
+  }
+}
