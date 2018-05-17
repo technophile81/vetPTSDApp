@@ -421,12 +421,19 @@ firebase.auth().signInWithPopup(provider).then(function(result) {
         if (countAssessment == questions.length){
             
             console.log(countAssessment == questions.length);
+            //hide main-column on full results
+            $("#assessment-column").attr("class", "md-col-0");
             
-            $("#assessment-column").animate({right: '2000px'}, "slow").attr("class", "md-col-0");
             $("#assessment-column").hide();
+            //expand results column on full results
             var finalresults = $("#results-preview");
-            finalresults.animate({right: '851px'}, "slow").attr("class", "md-col-12");
-        
+            
+            finalresults.attr("class", "md-col-12");
+            
+            finalresults.css({
+                "border-left":"none"
+            });
+            // Show each graphs on full results
             $("#assessment-result-graph").css({
                 "max-width":"25%",
                 "float":"left",
@@ -455,7 +462,7 @@ firebase.auth().signInWithPopup(provider).then(function(result) {
             $("#previewcontent").html("<h1>Results</h1>").css({
                 "text-align":"center"});
                 
-        
+            //Final advise   
             $("#advise").html("<p>Candy canes liquorice liquorice gingerbread chocolate cake lollipop ice cream. Ice cream chocolate jelly.Croissant brownie halvah chocolate bar ice cream cake cake. Jujubes jujubes soufflé. Cheesecake macaroon wafer liquorice sweet halvah toffee. Tart chocolate cake gummi bears gingerbread donut gingerbread cookie. Bonbon candy canes cookie. Lollipop fruitcake candy icing toffee sugar plum pie donut</p>");
         
         
