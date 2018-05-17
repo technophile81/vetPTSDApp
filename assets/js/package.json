@@ -1,0 +1,21 @@
+{
+  "name": "ptsdapp",
+  "version": "1.0.0",
+  "description": "ptsd assessment app (non-diagnostic)",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "vetPTSDApp"
+  },
+  "keywords": [
+    "PTSD"
+  ],
+  "author": "Brian, Kwanhee, Rob, Grace",
+  "license": "ISC",
+  "dependencies": {
+    "watson-developer-cloud": "^3.4.1"
+  }
+}
