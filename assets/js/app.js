@@ -569,7 +569,7 @@ $("#submit-pasted-text").on("click", function (event) {
             var adviceText = "<p>It's time to get help and you are not alone. PTSD affects 11 to 20 percent of veterans. <a href=''>Visit our resources page to find out more.</a><p>";
             displayFinalResults(adviceText);
         } else {
-            var stilladviceText = "<p>Our assessment indicates some concern. If you are worried that you or a loved one may be experiencing PTSD, it's never too early to start a conversation. View our resources page to learn more.<p>";
+            var stilladviceText = "<p>Our assessment indicates some concern. If you are worried that you or a loved one may be experiencing PTSD, it's never too early to start a conversation. <a href=''>Visit our resources page to find out more.</a><p>";
             displayFinalResults(stilladviceText);
         };
 
