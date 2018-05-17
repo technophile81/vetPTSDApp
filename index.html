@@ -57,7 +57,7 @@
         </nav>
     </header>
     <div class="hotline">
-        <p>If you need help now, call 1-800-###-####.</p>
+        <p>If you need help now, call 1-800-273-8255.</p>
     </div>
     <div class="container">
         <div class="row">
@@ -78,11 +78,12 @@
             </div>
             <div class="row">
                 <div class="col-md-9 col-sm-12" id="assessment-column">
+                    <p class = "bold center">You must complete all required sections below before you can view complete results. We strongly recommend that you complete as many optional sections as possible.</p>
                     <div class="accordion" id="accordion">
                         <div class="card">
                             <div class="card-header" id="headingOne">
                                 <h5 class="mb-0">
-                                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                                         <h3>Required: Assessment Questionnaire</h3>
                                     </button>
                                 </h5>
@@ -95,7 +96,7 @@
 
 
                             <!-- Change class from "collapse show step-one to collapse"     -->
-                            <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordion">
+                            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
                                 <div class="card-body">
                                     <div class="row">
                                         <div class="col-sm-12" id="assessment-div">
@@ -212,6 +213,8 @@
 
                         </div>
                     <div>
+                        <!--for mobile responsiveness, add row around each set of two and adjust for device width and add class
+                        for graph width-->
                         <div class="result-graph">
                         <p class = "center">Questionnaire Results</p>
                         <canvas id="assessment-result-graph" class="graph"></canvas>

@@ -360,6 +360,7 @@ var descriptTextFinalPercent= 0;
 var id = "";
 var idName ="";
 var keyWordsinEntry = [];
+var textAnalysisComplete = false;
 
 function analyzeDescriptionText(descriptionText) {
    
@@ -468,6 +469,7 @@ descriptTextFinalPercent = descriptTextFinalPercent * 100;
         console.log(descriptTextFinalPercent);
         overallResultArray.push(descriptTextFinalPercent);
         console.log("result array" + overallResultArray);
+        textAnalysisComplete = true;
         drawResultGraph(descriptTextFinalPercent, id, idName);
 
 }
@@ -564,7 +566,7 @@ $("#submit-pasted-text").on("click", function (event) {
         console.log(overallPercentage)
         if (overallPercentage > 50) {
             // this is where we can write the code for what we want to print to the results div based on our overall average
-            var adviceText = "<p>It's time to get help and you are not alone. PTSD affects 11 to 20 percent of veterans. Visit our resources page to find out more.<p>";
+            var adviceText = "<p>It's time to get help and you are not alone. PTSD affects 11 to 20 percent of veterans. <a href=''>Visit our resources page to find out more.</a><p>";
             displayFinalResults(adviceText);
         } else {
             var stilladviceText = "<p>Our assessment indicates some concern. If you are worried that you or a loved one may be experiencing PTSD, it's never too early to start a conversation. View our resources page to learn more.<p>";
@@ -617,7 +619,7 @@ $("#submit-pasted-text").on("click", function (event) {
     //Show final result when user finishes all required parts
 
     $("#results-button-div").on("click", "button", function(){
-        if (countAssessment == questions.length){
+        if (countAssessment == questions.length && textAnalysisComplete === true){
         calculateRecommendationAverage(); 
     
         }
