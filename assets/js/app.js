@@ -564,10 +564,10 @@ $("#submit-pasted-text").on("click", function (event) {
         console.log(overallPercentage)
         if (overallPercentage > 50) {
             // this is where we can write the code for what we want to print to the results div based on our overall average
-            var adviceText = "<p>It's time to get help.<p>";
+            var adviceText = "<p>It's time to get help and you are not alone. PTSD affects 11 to 20 percent of veterans. Visit our resources page to find out more.<p>";
             displayFinalResults(adviceText);
         } else {
-            var stilladviceText = "<p>It's STILL time to get help.<p>";
+            var stilladviceText = "<p>Our assessment indicates some concern. If you are worried that you or a loved one may be experiencing PTSD, it's never too early to start a conversation. View our resources page to learn more.<p>";
             displayFinalResults(stilladviceText);
         };
 
@@ -595,23 +595,6 @@ $("#submit-pasted-text").on("click", function (event) {
                 "border-left":"none"
             });
             // Show each graphs on full results
-            // $("#assessment-result-graph").css({
-            //     "max-width":"25%",
-            //     "float":"left",
-            //     "text-align":"center"
-            // });
-
-            // $("#description-result-graph").css({
-            //     "max-width":"25%",
-            //     "float":"left",
-            //     "text-align":"center"
-            // });
-
-            // $("#image-analysis-graph").css({
-            //     "max-width":"25%",
-            //     "float":"left",
-            //     "text-align":"center"
-            // });
 
             $(".result-graph").css({
                 "max-width":"25%",
