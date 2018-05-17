@@ -113,9 +113,27 @@ button:disabled h3{
     border-radius: 20px;
 } */
 
-/* Button style for assessment */
 
-#yes, #no, #resetbutton, #assessmentstart{
+/* Button style of card header */
+
+button{
+    border: 1px solid;
+    border-radius: 5px;
+    box-shadow: 3px 3px #999;
+}
+
+button:active {
+    transform: translateY(4px);
+}
+
+
+
+
+
+
+/* Button style inside of card body*/
+
+#yes, #no, #resetbutton, #assessmentstart, #submit-text, #imgSub, #submit-pasted-text{
     
     text-align: center;
     cursor: pointer;
@@ -139,6 +157,10 @@ button:disabled h3{
 #no:hover {background-color: navy}
 #resetbutton:hover {background-color: navy}
 #assessmentstart:hover {background-color: navy}
+#submit-text:hover {background-color: navy}
+#imgSub:hover {background-color: navy}
+#submit-pasted-text:hover {background-color: navy}
+
 
 #yes:active {
   background-color: #1c0355;
@@ -163,6 +185,26 @@ button:disabled h3{
     box-shadow: 0 2px #666;
     transform: translateY(4px);
 }
+
+#submit-text:active {
+    background-color: #1c0355;
+    box-shadow: 0 2px #666;
+    transform: translateY(4px);
+}
+
+#imgSub:active {
+    background-color: #1c0355;
+    box-shadow: 0 2px #666;
+    transform: translateY(4px);
+}
+
+#submit-pasted-text:active {
+    background-color: #1c0355;
+    box-shadow: 0 2px #666;
+    transform: translateY(4px);
+}
+
+
 
 #fullresult {
     padding: 10px;
