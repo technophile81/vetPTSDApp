@@ -351,6 +351,165 @@ firebase.auth().signInWithPopup(provider).then(function(result) {
             processImage();
         });
 
+        ////////////////Indico API Text Analysis Functions//////////////////////////////////////////////////
+
+// //variables for text analysis functions
+var descriptionTextResultsArray =[];
+var textAnalysisPercentageResult = 0;
+var descriptTextFinalPercent= 0;
+var id = "";
+var idName ="";
+var keyWordsinEntry = [];
+
+function analyzeDescriptionText(descriptionText) {
+   
+
+    //key words that are often present in descriptions of PTSD, factored into analysis to balance the quality of results from the Indico API for this subject matter
+    var ptsdKeyWords = ["flashbacks", "night terrors", "nightmares", "bad dreams", "relive", "reliving", "relives", "avoid", "avoiding", "negative", "negativity", "unloving", "insomnia",
+        "trouble sleeping", "difficulty sleeping", "distracted", "trouble concentrating", "trouble focusing", "startled", "nervous", "anxious",
+        "numb", "numbness", "jumpy", "irritable", "angered", "angry", "panic", "fear", "horror", "guilt", "shame", "depressed", "aggressive", "tense",
+        "on edge", "loss of interest", "not interested", "uninterested", "chills", "shaking", "detached", "outbursts", "hopeless", "suicide", "kill",
+        "kill myself", "suicidal"];
+
+    //API call and promise function to analyze the user's description of the circumstances for key words that are strongly related
+    //to declining mental health; presence of keyword is used to weight overall percentage of negative emotion in final result
+
+    $.post(
+        'https://apiv2.indico.io/keywords?version=2',
+        JSON.stringify({
+            'api_key': "e979df7911ebed695be1d678d77e6ce6",
+            'data': descriptionText,
+            'threshold': 0.1
+        })
+    ).then(function (res) {
+        //access data in the returned json object
+        console.log(res)
+        var keyWordObject = JSON.parse(res);
+        var keyWordResults = keyWordObject.results;
+        //could be its own function testing for keywords
+
+        for (var m = 0; m < ptsdKeyWords.length; m++) {
+            var arrayKeyWord = ptsdKeyWords[m];
+            for (keyword in keyWordResults) {
+                if (keyword == arrayKeyWord) {
+                    textAnalysisPercentageResult += 0.10;
+                    keyWordsinEntry.push(keyword);
+                }
+            }
+        }
+
+        //need to return these values for use outside this function?
+        console.log(textAnalysisPercentageResult);
+        descriptionTextResultsArray.push(textAnalysisPercentageResult);
+        console.log(keyWordsinEntry);
+        textEmotionAnalysis(descriptionText);
+    });
+}
+
+
+//API call and promise function to analyze the emotions in the text and capture instances of negative emotions
+function textEmotionAnalysis(descriptionText){
+    $.post(
+        'https://apiv2.indico.io/emotion',
+        JSON.stringify({
+            'api_key': "e979df7911ebed695be1d678d77e6ce6",
+            'data': descriptionText,
+            'threshold': 0.25
+        })
+    ).then(function (res) {
+        var textEmotionsObject = JSON.parse(res);
+        var textEmotionsResults = textEmotionsObject.results;
+        console.log(textEmotionsResults);
+        var emotionsInitialResult = 0;
+        var divider = 0;
+        for (property in textEmotionsResults) {
+            var emoNumValue = textEmotionsResults[property];
+            if (property === "sadness") {
+                emotionsInitialResult += emoNumValue;
+                divider++;
+            } if (property === "anger") {
+                emotionsInitialResult += emoNumValue;
+                divider++;
+
+            } if (property === "fear") {
+                emotionsInitialResult += emoNumValue;
+                divider++;
+            }if (property === "joy" || property === "surprise"){
+                emotionsInitialResult = 0;
+                divider = 1;
+            }
+
+        }
+        var finalEmotionsAverage = emotionsInitialResult / divider;
+        console.log(finalEmotionsAverage);
+        descriptionTextResultsArray.push(finalEmotionsAverage);
+        console.log(descriptionTextResultsArray);
+        //steps analysis on to the Watson API before final results are calculated based on results from both APIs
+        descriptionTextResultFxn();
+
+    });
+
+}
+
+
+////////////////////////////////////////////////////////Text Analysis Result Functions/////////////////////////////////////////////
+//Synthesizes the average of negative emotions and the weight added by the presence of keywords
+function descriptionTextResultFxn(){
+
+for (var i = 0; i < descriptionTextResultsArray.length; i++) {
+    descriptTextFinalPercent += descriptionTextResultsArray[i]
+}
+console.log(descriptTextFinalPercent);
+descriptTextFinalPercent = descriptTextFinalPercent * 100;
+
+    if (descriptTextFinalPercent > 100){
+        descriptTextFinalPercent = 100;
+    }
+        console.log(descriptTextFinalPercent);
+        overallResultArray.push(descriptTextFinalPercent);
+        console.log("result array" + overallResultArray);
+        drawResultGraph(descriptTextFinalPercent, id, idName);
+
+}
+
+
+//for the required description of concerning behaviors
+$("#submit-text").on("click", function (event) {
+    descriptionTextResultsArray =[];
+   textAnalysisPercentageResult = 0;
+   descriptTextFinalPercent= 0;
+    console.log("clicked")
+    var descriptionText = $("#behavior-description").val().trim();
+    event.preventDefault();
+
+    id = "#description-result-graph";
+    idName = "description-result-graph";
+    analyzeDescriptionText(descriptionText);
+
+    $("#behavior-description").val("Submitted.");
+
+
+});
+
+
+////for uploaded text that's not required
+
+$("#submit-pasted-text").on("click", function (event) {
+    descriptionTextResultsArray =[];
+    textAnalysisPercentageResult = 0;
+    descriptTextFinalPercent= 0;
+    console.log("clicked")
+    var descriptionText = $("#pasted-text").val().trim();
+    event.preventDefault();
+    id = "#text-analysis-graph";
+    idName = "text-analysis-graph";
+
+    analyzeDescriptionText(descriptionText);
+    $("#pasted-text").val("Submitted.");
+
+
+});
+
         //------------------------------------results functions---------------------------------------------------------->
 
         
