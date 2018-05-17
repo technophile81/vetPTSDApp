@@ -185,7 +185,13 @@ button:disabled h3{
 }
 
 
+.center{
+    text-align: center;
+}
 
+.bold {
+    font-weight: bold;
+}
 
 
 

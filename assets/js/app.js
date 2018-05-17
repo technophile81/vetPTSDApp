@@ -552,18 +552,23 @@ $("#submit-pasted-text").on("click", function (event) {
     var overallResultArray = [];
 
     function calculateRecommendationAverage() {
-
+        var resultArrayTotal= 0;
+        console.log("overall result array: " + overallResultArray);
         for (var k = 0; k < overallResultArray.length; k++) {
-            overallResultArray += overallResultArray[k];
+            resultArrayTotal += overallResultArray[k];
 
         };
 
-        overallPercentage = overallResultArray / overallResultArray.length;
+        var overallPercentage = resultArrayTotal / overallResultArray.length;
 
+        console.log(overallPercentage)
         if (overallPercentage > 50) {
             // this is where we can write the code for what we want to print to the results div based on our overall average
+            var adviceText = "<p>It's time to get help and you are not alone. PTSD affects 11 to 20 percent of veterans. Visit our resources page to find out more.<p>";
+            displayFinalResults(adviceText);
         } else {
-
+            var stilladviceText = "<p>Our assessment indicates some concern. If you are worried that you or a loved one may be experiencing PTSD, it's never too early to start a conversation. View our resources page to learn more.<p>";
+            displayFinalResults(stilladviceText);
         };
 
     }
@@ -573,11 +578,8 @@ $("#submit-pasted-text").on("click", function (event) {
         test: "test2"
     });
 
-
-    //Show final result when user finishes all required parts
-
-    $("#results-button-div").on("click", "button", function(){
-        if (countAssessment == questions.length){
+    function displayFinalResults(adviceText){
+        
             
             console.log(countAssessment == questions.length);
             //hide main-column on full results
@@ -593,25 +595,8 @@ $("#submit-pasted-text").on("click", function (event) {
                 "border-left":"none"
             });
             // Show each graphs on full results
-            $("#assessment-result-graph").css({
-                "max-width":"25%",
-                "float":"left",
-                "text-align":"center"
-            });
 
-            $("#description-result-graph").css({
-                "max-width":"25%",
-                "float":"left",
-                "text-align":"center"
-            });
-
-            $("#image-analysis-graph").css({
-                "max-width":"25%",
-                "float":"left",
-                "text-align":"center"
-            });
-
-            $("#text-analysis-graph").css({
+            $(".result-graph").css({
                 "max-width":"25%",
                 "float":"left",
                 "text-align":"center"
@@ -622,13 +607,22 @@ $("#submit-pasted-text").on("click", function (event) {
                 "text-align":"center"});
                 
             //Final advise   
-            $("#advise").html("<p>Candy canes liquorice liquorice gingerbread chocolate cake lollipop ice cream. Ice cream chocolate jelly.Croissant brownie halvah chocolate bar ice cream cake cake. Jujubes jujubes soufflé. Cheesecake macaroon wafer liquorice sweet halvah toffee. Tart chocolate cake gummi bears gingerbread donut gingerbread cookie. Bonbon candy canes cookie. Lollipop fruitcake candy icing toffee sugar plum pie donut</p>");
+            $("#advise").html(adviceText);
         
         
-        }
+        
     
+    }
 
-    })
+    //Show final result when user finishes all required parts
+
+    $("#results-button-div").on("click", "button", function(){
+        if (countAssessment == questions.length){
+        calculateRecommendationAverage(); 
+    
+        }
+
+})
 
 
 });
