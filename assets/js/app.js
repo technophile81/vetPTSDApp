@@ -511,11 +511,13 @@ descriptTextFinalPercent = descriptTextFinalPercent * 100;
     if (descriptTextFinalPercent > 100){
         descriptTextFinalPercent = 100;
     }
-        console.log(descriptTextFinalPercent);
-        overallResultArray.push(descriptTextFinalPercent);
+        console.log("text percent:" + descriptTextFinalPercent);
+        var textPercenttoNum = parseInt(descriptTextFinalPercent);
+        var textAnalysisFinalResult = Math.round(textPercenttoNum);
+        overallResultArray.push(textAnalysisFinalResult);
         console.log("result array" + overallResultArray);
         textAnalysisComplete = true;
-        drawResultGraph(descriptTextFinalPercent, id, idName);
+        drawResultGraph(textAnalysisFinalResult, id, idName);
 
 }
 
