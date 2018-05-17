@@ -143,6 +143,7 @@ button:active {
     border: none;
     border-radius: 5px;
     box-shadow: 0 3px #999;
+    margin-top: 10px;
 }
 
 #no{
