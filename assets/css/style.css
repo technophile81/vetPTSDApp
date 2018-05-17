@@ -116,13 +116,17 @@ button:disabled h3{
 
 /* Button style of card header */
 
-button{
-    border: 1px solid;
+#headerbutton{
+    border: 1px solid #888 !important;
     border-radius: 5px;
     box-shadow: 3px 3px #999;
 }
 
-button:active {
+#headerbutton:hover {background-color: #666 !important;}
+
+
+
+#headerbutton:active {
     transform: translateY(4px);
 }
 
