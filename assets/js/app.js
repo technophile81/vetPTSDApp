@@ -16,7 +16,9 @@ $(document).ready(function () {
 
     var database = firebase.database();
 
-
+    var emotionAvg = 0;
+    var emotionTotal = 0;
+    var emotionalTriggers = [];
 
 //Google authentication Signinwithpopup
 var provider = new firebase.auth.GoogleAuthProvider();
@@ -267,7 +269,7 @@ firebase.auth().signInWithPopup(provider).then(function(result) {
         function processImage() {
     
             // Replace the subscriptionKey string value with your valid subscription key.
-            var subscriptionKey = "b23434428c4d49d8a925cf2c0d434cbc";
+            var subscriptionKey = "c3f1a82b6b124af5bb9e94a69ca38d23";
     
             var uriBase = "https://westcentralus.api.cognitive.microsoft.com/face/v1.0/detect";
     
@@ -309,47 +311,90 @@ firebase.auth().signInWithPopup(provider).then(function(result) {
               
                 // variable that goes deeper into response data
                 var emotionData = data[0].faceAttributes.emotion;
-                // console.log(emotionData);
-    
-                // variable to set threshold for alert
-                var threshold = parseFloat(.49);
-                responseArray.push(emotionData);
-    
-                
-    
-                // array with only pertinent emotional data collected from response
-                var emotionalTriggers = [emotionData.anger, emotionData.contempt, emotionData.disgust, emotionData.fear, emotionData.neutral, emotionData.sadness];
-            
-    
-                // looping through selected response data
-                for (var i = 0; i < emotionalTriggers.length; i++){
-                      var emotionCheck = emotionalTriggers[i]
-                    
-    
-                // iterating through array to find what data falls above or below the threshold declared above
-               
-                    if( emotionCheck < threshold){
-                        console.log("yaaaay!!")
-                    } else {
-                        console.log("NO!");
-                    };
-                };
-                
-            })
-        
-    
-            .fail(function(jqXHR, textStatus, errorThrown) {
-                // Display error message.
-                var errorString = (errorThrown === "") ? "Error. " : errorThrown + " (" + jqXHR.status + "): ";
-                errorString += (jqXHR.responseText === "") ? "" : (jQuery.parseJSON(jqXHR.responseText).message) ?
-                    jQuery.parseJSON(jqXHR.responseText).message : jQuery.parseJSON(jqXHR.responseText).error.message;
-                alert(errorString);
-            });
-        };
-    
-        $("#imgSub").on("click",function(){
-            processImage();
-        });
+               // console.log(emotionData);
+
+               // variable to set threshold for alert
+               var threshold = parseFloat(.035);
+               responseArray.push(emotionData);
+
+               emotionMath = [];
+               console.log(emotionData);
+
+
+               var neutralWeight = emotionData.neutral * 0.18;
+               console.log(neutralWeight);
+               // array with only pertinent emotional data collected from response
+
+               emotionalTriggers = [emotionData.anger, emotionData.contempt, emotionData.disgust, emotionData.fear, neutralWeight, emotionData.sadness];
+
+
+               function average(emotionalTriggers){
+                //    console.log(emotionalTriggers);
+                   emotionTotal = 0
+                   for (var i = 0; i < emotionalTriggers.length; i++){
+                       emotionTotal = emotionTotal+emotionalTriggers[i];
+                   };
+                   
+                   emotionAvg = emotionTotal/emotionalTriggers.length;
+                   console.log(emotionAvg);
+
+                   return emotionAvg;
+               };
+
+               average(emotionalTriggers);
+               var imageFinalAvg = Math.round(emotionAvg * 1000);
+               imageFinalAvg = imageFinalAvg * 1.25;
+               overallResultArray.push(imageFinalAvg);
+               drawResultGraph(imageFinalAvg, "#image-analysis-graph", "image-analysis-graph");
+               console.log(emotionAvg);
+
+
+
+               // looping through selected response data
+            //    for (var i = 0; i < emotionalTriggers.length; i++) {
+            //        var emotionCheck = emotionalTriggers[i]
+            //        emotionMath.push(emotionalTriggers[i]);
+
+
+
+
+                   // iterating through array to find what data falls above or below the threshold declared above
+
+            //        if (emotionCheck < threshold) {
+            //            console.log("yaaaay!!");
+            //        } else {
+            //            console.log("UHOH!");
+            //        };
+            //    };
+                //    console.log(emotionMath);
+
+                //    function average(emotionalTriggers){
+                //        emotionTotal = 0
+                //        for (var i = 0; i < emotionalTriggers.length; i++){
+                //            emotionTotal = emotionTotal+emotionalTriggers[i];
+                //        };
+
+                //        emotionAvg = emotionTotal/emotionalTriggers.length;
+                //        return emotionAvg;
+                //        console.log(emotionAvg);
+                //    };
+
+
+           })
+
+
+           .fail(function (jqXHR, textStatus, errorThrown) {
+               // Display error message.
+               var errorString = (errorThrown === "") ? "Error. " : errorThrown + " (" + jqXHR.status + "): ";
+               errorString += (jqXHR.responseText === "") ? "" : (jQuery.parseJSON(jqXHR.responseText).message) ?
+                   jQuery.parseJSON(jqXHR.responseText).message : jQuery.parseJSON(jqXHR.responseText).error.message;
+               alert(errorString);
+           });
+   };
+
+   $("#imgSub").on("click", function () {
+       processImage();
+   });
 
         ////////////////Indico API Text Analysis Functions//////////////////////////////////////////////////
 
